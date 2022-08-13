@@ -19,8 +19,9 @@ public class TrainingDto {
         private Difficulty difficulty;
         private int duration;
         private float rating;
+        private String type;
 
-        public Get(Long id, String name, String trainers, String description, String pic, int price, boolean isGroup, Difficulty difficulty, int duration, float rating) {
+        public Get(Long id, String name, String trainers, String description, String pic, int price, boolean isGroup, Difficulty difficulty, int duration, float rating, String type) {
             this.id = id;
             this.name = name;
             this.trainers = trainers;
@@ -31,6 +32,7 @@ public class TrainingDto {
             this.difficulty = difficulty;
             this.duration = duration;
             this.rating = rating;
+            this.type = type;
         }
 
         public Get() {

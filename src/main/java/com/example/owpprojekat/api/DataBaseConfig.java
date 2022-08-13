@@ -2,6 +2,7 @@ package com.example.owpprojekat.api;
 
 import com.example.owpprojekat.api.repositories.CommentRepo;
 import com.example.owpprojekat.api.repositories.TrainingRepo;
+import com.example.owpprojekat.api.repositories.TrainingTypeRepo;
 import com.example.owpprojekat.api.repositories.UserRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,13 @@ public class DataBaseConfig {
     CommandLineRunner initComments(CommentRepo repo) {
         return args -> {
             log.info("Comments initialized");
+        };
+    }
+
+    @Bean
+    CommandLineRunner initTrainingTypes(TrainingTypeRepo repo) {
+        return args -> {
+            log.info("Training types initialized");
         };
     }
 }

@@ -5,7 +5,29 @@
     <title>Title</title>
 </head>
 <body>
-<p th:text="${query}"></p>
-Training page
+<p th:text="${data.pic}"></p>
+<p th:text="${data.name}"></p>
+<p th:text="${data.type}"></p>
+<p th:text="${data.price}"></p>
+<p th:text="${data.trainers}"></p>
+<p th:text="${data.description}"></p>
+<p th:text="${data.group}"></p>
+<p th:text="${data.difficulty}"></p>
+<p th:text="${data.duration}"></p>
+<p th:text="${data.rating}"></p>
+
+<h2>Schedule:</h2>
+<table>
+    <tr>
+        <th>Hall tag</th>
+        <th>Date</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="item:${schedule}">
+        <td th:text="${item.hallTag}"></td>
+        <td th:text="${item.date}"></td>
+        <td><button>Add to cart</button></td>
+    </tr>
+</table>
 </body>
 </html>

@@ -1,9 +1,14 @@
 package com.example.owpprojekat.api.models;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+
+@Entity
+@Getter
+@Setter
+@Table(name = "loyalty_card")
 public class LoyaltyCard {
     private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
     private String discount;

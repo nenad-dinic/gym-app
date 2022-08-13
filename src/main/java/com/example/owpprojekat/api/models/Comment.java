@@ -19,5 +19,5 @@ public class Comment {
     private int userId;
     private int trainingId;
     private Status status;
-    private Boolean isAnonymous;
+    private boolean isAnonymous;
 }

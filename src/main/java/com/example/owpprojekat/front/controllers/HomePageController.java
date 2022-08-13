@@ -12,11 +12,11 @@ import java.util.List;
 @Controller
 public class HomePageController {
 
+    RestTemplate client = new RestTemplate();
 
     @GetMapping("/")
     public String home(Model model) {
         List<TrainingDto.Get> trainings = new ArrayList<>();
-        RestTemplate client = new RestTemplate();
         trainings = client.getForObject("http://localhost:8080/api/training/available", trainings.getClass());
         model.addAttribute("trainings", trainings);
 
