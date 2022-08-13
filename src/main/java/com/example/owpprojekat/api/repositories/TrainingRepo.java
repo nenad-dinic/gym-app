@@ -14,5 +14,4 @@ public interface TrainingRepo extends JpaRepository<Training, Long> {
             "WHERE (SELECT COUNT(*) FROM reservation r " +
             "WHERE r.schedule_id = s.id) < h.capacity;", nativeQuery = true)
     List<Training> getAvailable();
-
 }

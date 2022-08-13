@@ -7,6 +7,11 @@
 </head>
 <body>
 <h1>Hello world</h1>
-<h2>test</h2>
+<div th:each="training : ${trainings}">
+    <img th:src="@{images/default.jpg}">
+    <a th:href="@{/training/(id=${training.id})} " th:text="${training.name}"></a>
+    <h2 th:text="${training.price}"></h2>
+    <h2 th:text="${training.rating}"></h2>
+</div>
 </body>
 </html>
