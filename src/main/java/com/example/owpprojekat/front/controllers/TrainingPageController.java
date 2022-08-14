@@ -1,5 +1,6 @@
 package com.example.owpprojekat.front.controllers;
 
+import com.example.owpprojekat.api.dto.CommentDto;
 import com.example.owpprojekat.api.dto.ScheduleDto;
 import com.example.owpprojekat.api.dto.TrainingDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class TrainingPageController {
         TrainingDto.Get training = client.getForObject("http://localhost:8080/api/training?id=" + id, TrainingDto.Get.class);
         List<ScheduleDto.Get> schedule = new ArrayList<>();
         schedule = client.getForObject("http://localhost:8080/api/schedule/training?id=" + id, schedule.getClass());
+        List<CommentDto.Get> comments = new ArrayList<>();
+        comments = client.getForObject("http://localhost:8080/api/comments/training?id=" + id, comments.getClass());
+        model.addAttribute("comments", comments);
         model.addAttribute("schedule", schedule);
         model.addAttribute("data", training);
         return "training";

@@ -16,8 +16,8 @@ public class Comment {
     private String text;
     private int rating;
     private Date date;
-    private int userId;
-    private int trainingId;
+    private Long userId;
+    private Long trainingId;
     private Status status;
     private boolean isAnonymous;
 }

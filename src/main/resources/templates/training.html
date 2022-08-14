@@ -29,5 +29,21 @@
         <td><button>Add to cart</button></td>
     </tr>
 </table>
+
+<h2>Comments:</h2>
+<table>
+    <tr>
+        <th>Comment by</th>
+        <th>Text</th>
+        <th>Date</th>
+        <th>Rating</th>
+    </tr>
+    <tr th:each="item:${comments}" th:if="${item.status} == 'ACCEPTED'">
+        <td th:text="${item.anonymous} ? 'Anonymous' : ${item.username}"></td>
+        <td th:text="${item.text}"></td>
+        <td th:text="${item.date}"></td>
+        <td th:text="${item.rating}"></td>
+    </tr>
+</table>
 </body>
 </html>
