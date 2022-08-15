@@ -3,19 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link th:href="@{/main.css}" rel="stylesheet">
+    <link th:href="@{/styles/main.css}" rel="stylesheet">
+    <script defer th:src="@{/javascript/index.js}"></script>
 </head>
 <body>
-<table>
+<nav>
+    <a href="/">home</a>
+    <a href="/profile">profile</a>
+    <a href="/admin">admin</a>
+    <a href="/wishlist">wishlist</a>
+    <a href="/cart">cart</a>
+</nav>
+
+<input type="text" placeholder="Name" id="name">
+<input type="text" placeholder="Type" id="type">
+<input type="number" placeholder="Min price" id="priceMin">
+<input type="number" placeholder="Max price" id="priceMax">
+<input type="text" placeholder="Trainer" id="trainer">
+<label for="difficulty">Difficulty:</label>
+<select id="difficulty">
+    <option value="">Any</option>
+    <option value="BEGINNER">Beginner</option>
+    <option value="INTERMEDIATE">intermediate </option>
+    <option value="ADVANCED">Advanced</option>
+</select>
+<label for="group">Group:</label>
+<select id="group">
+    <option value="">Any</option>
+    <option value="true">Yes</option>
+    <option value="false">No</option>
+</select>
+<button onclick="filterTrainings()">Search</button>
+
+<br>
+<br>
+
+<table id="trainingTable">
     <tr>
         <th>Image</th>
-        <th>Name</th>
-        <th>Type of training</th>
-        <th>Price</th>
-        <th>Trainers</th>
-        <th>Group</th>
-        <th>Difficulty</th>
-        <th>Rating</th>
+        <th onclick="sortTable(1)">Name</th>
+        <th onclick="sortTable(2)">Type of training</th>
+        <th onclick="sortTable(3)">Price</th>
+        <th onclick="sortTable(4)">Trainers</th>
+        <th onclick="sortTable(5)">Group</th>
+        <th onclick="sortTable(6)">Difficulty</th>
+        <th onclick="sortTable(7)">Rating</th>
     </tr>
     <tr th:each="training:${trainings}">
         <td><img th:src="@{images/default.jpg}"></td>

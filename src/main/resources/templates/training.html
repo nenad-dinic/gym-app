@@ -3,9 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script defer th:src="@{/javascript/training.js}"></script>
 </head>
 <body>
-<p th:text="${data.pic}"></p>
+<nav>
+    <a href="/">home</a>
+    <a href="/profile">profile</a>
+    <a href="/admin">admin</a>
+    <a href="/wishlist">wishlist</a>
+    <a href="/cart">cart</a>
+    <a href="/login">login</a>
+    <a href="/register">register</a>
+</nav>
+
+<p><img th:src="@{/images/default.jpg}"></p>
 <p th:text="${data.name}"></p>
 <p th:text="${data.type}"></p>
 <p th:text="${data.price}"></p>
@@ -15,6 +26,7 @@
 <p th:text="${data.difficulty}"></p>
 <p th:text="${data.duration}"></p>
 <p th:text="${data.rating}"></p>
+<button th:onclick="addToWishlist([[${data.id}]])">Add to wishlist</button>
 
 <h2>Schedule:</h2>
 <table>
@@ -26,11 +38,12 @@
     <tr th:each="item:${schedule}">
         <td th:text="${item.hallTag}"></td>
         <td th:text="${item.date}"></td>
-        <td><button>Add to cart</button></td>
+        <td><button th:onclick="addToCart([[${item.id}]])">Add to cart</button></td>
     </tr>
 </table>
 
 <h2>Comments:</h2>
+<button>Add comment</button>
 <table>
     <tr>
         <th>Comment by</th>
