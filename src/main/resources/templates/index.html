@@ -5,15 +5,10 @@
     <title>Title</title>
     <link th:href="@{/styles/main.css}" rel="stylesheet">
     <script defer th:src="@{/javascript/index.js}"></script>
+    <script defer th:src="@{/javascript/utils.js}"></script>
 </head>
 <body>
-<nav>
-    <a href="/">home</a>
-    <a href="/profile">profile</a>
-    <a href="/admin">admin</a>
-    <a href="/wishlist">wishlist</a>
-    <a href="/cart">cart</a>
-</nav>
+<div th:insert="fragments::navigation"></div>
 
 <input type="text" placeholder="Name" id="name">
 <input type="text" placeholder="Type" id="type">
@@ -41,13 +36,13 @@
 <table id="trainingTable">
     <tr>
         <th>Image</th>
-        <th onclick="sortTable(1)">Name</th>
-        <th onclick="sortTable(2)">Type of training</th>
-        <th onclick="sortTable(3)">Price</th>
-        <th onclick="sortTable(4)">Trainers</th>
-        <th onclick="sortTable(5)">Group</th>
-        <th onclick="sortTable(6)">Difficulty</th>
-        <th onclick="sortTable(7)">Rating</th>
+        <th onclick="sortTable(1, 'trainingTable')">Name</th>
+        <th onclick="sortTable(2, 'trainingTable')">Type of training</th>
+        <th onclick="sortTable(3, 'trainingTable')">Price</th>
+        <th onclick="sortTable(4, 'trainingTable')">Trainers</th>
+        <th onclick="sortTable(5, 'trainingTable')">Group</th>
+        <th onclick="sortTable(6, 'trainingTable')">Difficulty</th>
+        <th onclick="sortTable(7, 'trainingTable')">Rating</th>
     </tr>
     <tr th:each="training:${trainings}">
         <td><img th:src="@{images/default.jpg}"></td>

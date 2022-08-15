@@ -6,15 +6,8 @@
     <script defer th:src="@{/javascript/training.js}"></script>
 </head>
 <body>
-<nav>
-    <a href="/">home</a>
-    <a href="/profile">profile</a>
-    <a href="/admin">admin</a>
-    <a href="/wishlist">wishlist</a>
-    <a href="/cart">cart</a>
-    <a href="/login">login</a>
-    <a href="/register">register</a>
-</nav>
+<div th:insert="fragments::navigation"></div>
+
 
 <p><img th:src="@{/images/default.jpg}"></p>
 <p th:text="${data.name}"></p>
