@@ -7,6 +7,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -19,9 +21,25 @@ public class User {
     private String email;
     private String name;
     private String lastname;
-    private LocalDate dateOfBirth;
+    private Date dateOfBirth;
     private String address;
     private String phoneNum;
     private LocalDateTime regDateTime;
     private Role role;
+
+    public User(String username, String password, String email, String name, String lastname, Date dateOfBirth, String address, String phoneNum, LocalDateTime regDateTime, Role role) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.name = name;
+        this.lastname = lastname;
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
+        this.phoneNum = phoneNum;
+        this.regDateTime = LocalDateTime.now();
+        this.role = role;
+    }
+
+    public User() {
+    }
 }
