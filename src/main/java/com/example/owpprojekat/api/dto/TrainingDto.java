@@ -8,7 +8,7 @@ public class TrainingDto {
 
     @Getter
     @Setter
-    public static class Get{
+    public static class Get {
         private Long id;
         private String name;
         private String trainers;
@@ -41,7 +41,7 @@ public class TrainingDto {
 
     @Setter
     @Getter
-    public static class Add{
+    public static class Add {
         private String name;
         private String trainers;
         private String description;
@@ -50,7 +50,18 @@ public class TrainingDto {
         private boolean isGroup;
         private Difficulty difficulty;
         private int duration;
+    }
 
-
+    @Setter
+    @Getter
+    public static class Update {
+        private String name;
+        private String trainers;
+        private String description;
+        private String pic;
+        private int price;
+        private boolean isGroup;
+        private Difficulty difficulty;
+        private int duration;
     }
 }

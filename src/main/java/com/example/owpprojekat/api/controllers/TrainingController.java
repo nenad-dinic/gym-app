@@ -55,4 +55,28 @@ public class TrainingController {
             return null;
         }
     }
+
+    @PutMapping(value = "api/training",
+    produces = MediaType.APPLICATION_JSON_VALUE,
+    consumes = MediaType.APPLICATION_JSON_VALUE)
+    TrainingDto.Get updateTraining(@RequestBody TrainingDto.Update data, @RequestParam ("id") String id) {
+        try {
+            Training t = trainingRepo.findById(Long.parseLong(id)).get();
+            t.setName(data.getName());
+            t.setTrainers(data.getTrainers());
+            t.setDescription(data.getDescription());
+            t.setPic(data.getPic());
+            t.setPrice(data.getPrice());
+            t.setGroup(data.isGroup());
+            t.setDifficulty(data.getDifficulty());
+            t.setDuration(data.getDuration());
+
+            trainingRepo.save(t);
+            TrainingDto.Get result = new TrainingDto.Get(t.getId(), t.getName(), t.getTrainers(), t.getDescription(), t.getPic(), t.getPrice(), t.isGroup(), t.getDifficulty(), t.getDuration(), commentRepo.getRatingForTraining(t.getId()), trainingRepo.getTrainingType(t.getId()));
+
+            return result;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

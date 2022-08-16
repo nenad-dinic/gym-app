@@ -9,7 +9,7 @@ public class ScheduleDto {
 
     @Getter
     @Setter
-    public static class Get{
+    public static class Get {
         private Long id;
         private String hallTag;
         private Long trainingId;
@@ -26,5 +26,11 @@ public class ScheduleDto {
         }
     }
 
-
+    @Setter
+    @Getter
+    public static class Add {
+        private Long hallId;
+        private Long trainingId;
+        private LocalDateTime date;
+    }
 }

@@ -15,4 +15,13 @@ public class Schedule {
     private Long hallId;
     private Long trainingId;
     private LocalDateTime date;
+
+    public Schedule(Long hallId, Long trainingId, LocalDateTime date) {
+        this.hallId = hallId;
+        this.trainingId = trainingId;
+        this.date = date;
+    }
+
+    public Schedule() {
+    }
 }
