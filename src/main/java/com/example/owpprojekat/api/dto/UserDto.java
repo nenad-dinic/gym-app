@@ -3,6 +3,7 @@ package com.example.owpprojekat.api.dto;
 import com.example.owpprojekat.api.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -48,6 +49,7 @@ public class UserDto {
         private String email;
         private String name;
         private String lastname;
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
         private Date dateOfBirth;
         private String address;
         private String phoneNum;
