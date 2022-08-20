@@ -45,7 +45,7 @@
         <th onclick="sortTable(7, 'trainingTable')">Rating</th>
     </tr>
     <tr th:each="training:${trainings}">
-        <td><img th:src="@{images/default.jpg}"></td>
+        <td><img th:src="${training.pic}"></td>
         <td><a th:href="@{/training/(id=${training.id})} " th:text="${training.name}"></a></td>
         <td th:text="${training.type}"></td>
         <td th:text="${training.price}"></td>

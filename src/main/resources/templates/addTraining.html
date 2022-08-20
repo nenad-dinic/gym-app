@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add training</title>
+</head>
+<body>
+<div th:insert="fragments::navigation"></div>
+<br>
+<form action="#" th:action="@{/training/add}" method="post" th:object="${data}">
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}">
+    <label for="trainers">Trainers:</label>
+    <input type="text" id="trainers" th:field="*{trainers}">
+    <label for="description">Description:</label>
+    <input type="text" id="description" th:field="*{description}">
+    <label for="pic">Picture:</label>
+    <input type="text" id="pic" th:field="*{pic}">
+    <label for="price">Price:</label>
+    <input type="number" id="price" th:field="*{price}">
+    <label for="group">Group:</label>
+    <select id="group" th:field="*{group}">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+    </select>
+    <label for="difficulty">Difficulty;:</label>
+    <select id="difficulty" th:field="*{difficulty}">
+        <option value="BEGINNER">Beginner</option>
+        <option value="INTERMEDIATE">Intermediate</option>
+        <option value="ADVANCED">Advanced</option>
+    </select>
+    <label for="duration">Duration:</label>
+    <input type="number" min="10" max="180" step="5" id="duration" value="30" th:field="*{duration}">
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>
