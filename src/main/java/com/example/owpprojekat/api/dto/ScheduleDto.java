@@ -2,6 +2,7 @@ package com.example.owpprojekat.api.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -31,6 +32,7 @@ public class ScheduleDto {
     public static class Add {
         private Long hallId;
         private Long trainingId;
+        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
         private LocalDateTime date;
     }
 }

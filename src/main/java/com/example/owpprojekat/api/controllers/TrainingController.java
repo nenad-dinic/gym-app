@@ -43,6 +43,17 @@ public class TrainingController {
         return result;
     }
 
+    @GetMapping(value = "/api/trainings",
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    List<TrainingDto.Get> getTrainings() {
+        List<TrainingDto.Get> result = new ArrayList<>();
+        List<Training> trainings = trainingRepo.findAll();
+        for (Training t : trainings) {
+            result.add(new TrainingDto.Get(t.getId(), t.getName(), t.getTrainers(), t.getDescription(), t.getPic(), t.getPrice(), t.isGroup(), t.getDifficulty(), t.getDuration(), commentRepo.getRatingForTraining(t.getId()), trainingRepo.getTrainingType(t.getId())));
+        }
+        return result;
+    }
+
     @PostMapping(value = "api/training",
     produces = MediaType.APPLICATION_JSON_VALUE,
     consumes = MediaType.APPLICATION_JSON_VALUE)
