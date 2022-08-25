@@ -7,7 +7,7 @@
 <body>
 <div th:insert="fragments::navigation"></div>
 <br>
-<form action="#" th:action="@{/training/add}" method="post" th:object="${data}">
+<form action="#" th:action="@{/training/modify}" method="post" th:object="${data}">
     <label for="name">Name:</label>
     <input type="text" id="name" th:field="*{name}">
     <label for="trainers">Trainers:</label>

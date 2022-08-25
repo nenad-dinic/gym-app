@@ -20,6 +20,7 @@
 <p th:text="${data.duration}"></p>
 <p th:text="${data.rating}"></p>
 <button th:onclick="addToWishlist([[${data.id}]])">Add to wishlist</button>
+<button th:onclick="editTraining([[${data.id}]])">Edit training</button>
 
 <h2>Schedule:</h2>
 <table>

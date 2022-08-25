@@ -23,3 +23,7 @@ function addToWishlist(id) {
     }
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
 }
+
+function editTraining(id) {
+    window.location.href='/training/modify?id=' + id;
+}
