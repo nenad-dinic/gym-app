@@ -13,4 +13,12 @@ public class Hall {
     private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
     private String tag;
     private int capacity;
+
+    public Hall(String tag, int capacity) {
+        this.tag = tag;
+        this.capacity = capacity;
+    }
+
+    public Hall() {
+    }
 }

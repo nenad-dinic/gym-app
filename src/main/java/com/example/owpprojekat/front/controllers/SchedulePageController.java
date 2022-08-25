@@ -38,6 +38,10 @@ public class SchedulePageController {
     public String postSchedule(@ModelAttribute ScheduleDto.Add data, Model model) {
         model.addAttribute("data", data);
         ScheduleDto.Get response = client.postForObject("http://localhost:8080/api/schedule", data, ScheduleDto.Get.class);
+        if (response == null) {
+            return "redirect:/schedule";
+            //TODO obavestiti korisnika o uspelim/neuspleim dodavanjima schedula
+        }
         return "redirect:/admin";
     }
 }

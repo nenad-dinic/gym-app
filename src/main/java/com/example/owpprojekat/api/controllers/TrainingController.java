@@ -28,30 +28,42 @@ public class TrainingController {
     @GetMapping(value = "/api/training",
     produces = MediaType.APPLICATION_JSON_VALUE)
     TrainingDto.Get getTraining(@RequestParam("id") String id) {
-        Training t = trainingRepo.findById(Long.parseLong(id)).get();
-        return new TrainingDto.Get(t.getId(), t.getName(), t.getTrainers(), t.getDescription(), t.getPic(), t.getPrice(), t.isGroup(), t.getDifficulty(), t.getDuration(), commentRepo.getRatingForTraining(t.getId()), trainingRepo.getTrainingType(t.getId()));
+        try {
+            Training t = trainingRepo.findById(Long.parseLong(id)).get();
+            return new TrainingDto.Get(t.getId(), t.getName(), t.getTrainers(), t.getDescription(), t.getPic(), t.getPrice(), t.isGroup(), t.getDifficulty(), t.getDuration(), commentRepo.getRatingForTraining(t.getId()), trainingRepo.getTrainingType(t.getId()));
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @GetMapping(value = "/api/training/available",
     produces = MediaType.APPLICATION_JSON_VALUE)
     List<TrainingDto.Get> getAvailableTrainings() {
-        List<TrainingDto.Get> result = new ArrayList<>();
-        List<Training> trainings = trainingRepo.getAvailable();
-        for (Training t : trainings) {
-            result.add(new TrainingDto.Get(t.getId(), t.getName(), t.getTrainers(), t.getDescription(), t.getPic(), t.getPrice(), t.isGroup(), t.getDifficulty(), t.getDuration(), commentRepo.getRatingForTraining(t.getId()), trainingRepo.getTrainingType(t.getId())));
+        try {
+            List<TrainingDto.Get> result = new ArrayList<>();
+            List<Training> trainings = trainingRepo.getAvailable();
+            for (Training t : trainings) {
+                result.add(new TrainingDto.Get(t.getId(), t.getName(), t.getTrainers(), t.getDescription(), t.getPic(), t.getPrice(), t.isGroup(), t.getDifficulty(), t.getDuration(), commentRepo.getRatingForTraining(t.getId()), trainingRepo.getTrainingType(t.getId())));
+            }
+            return result;
+        } catch (Exception e) {
+            return null;
         }
-        return result;
     }
 
     @GetMapping(value = "/api/trainings",
     produces = MediaType.APPLICATION_JSON_VALUE)
     List<TrainingDto.Get> getTrainings() {
-        List<TrainingDto.Get> result = new ArrayList<>();
-        List<Training> trainings = trainingRepo.findAll();
-        for (Training t : trainings) {
-            result.add(new TrainingDto.Get(t.getId(), t.getName(), t.getTrainers(), t.getDescription(), t.getPic(), t.getPrice(), t.isGroup(), t.getDifficulty(), t.getDuration(), commentRepo.getRatingForTraining(t.getId()), trainingRepo.getTrainingType(t.getId())));
+        try {
+            List<TrainingDto.Get> result = new ArrayList<>();
+            List<Training> trainings = trainingRepo.findAll();
+            for (Training t : trainings) {
+                result.add(new TrainingDto.Get(t.getId(), t.getName(), t.getTrainers(), t.getDescription(), t.getPic(), t.getPrice(), t.isGroup(), t.getDifficulty(), t.getDuration(), commentRepo.getRatingForTraining(t.getId()), trainingRepo.getTrainingType(t.getId())));
+            }
+            return result;
+        } catch (Exception e) {
+            return null;
         }
-        return result;
     }
 
     @PostMapping(value = "api/training",

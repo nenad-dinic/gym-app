@@ -60,6 +60,7 @@ public class ModifyTrainingPage {
             response = client.exchange("http://localhost:8080/api/training", HttpMethod.POST, new HttpEntity<>(data), TrainingDto.Get.class);
         }
 
+        //TODO obavestiti korisnika o uspelim/neuspleim dodavanjima/izmenama
         if (response == null) {
             return "redirect:/";
         }

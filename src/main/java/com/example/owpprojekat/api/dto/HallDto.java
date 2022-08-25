@@ -21,4 +21,17 @@ public class HallDto {
         public Get() {
         }
     }
+
+    @Getter
+    @Setter
+    public static class Add {
+        private String hallTag;
+        private int capacity;
+    }
+
+    @Getter
+    @Setter
+    public static class Update {
+        private int capacity;
+    }
 }

@@ -26,6 +26,7 @@ public class LoginPageController {
         response = client.postForObject("http://localhost:8080/api/user/login", data, UserDto.Get.class);
         if (response == null) {
             return "redirect:/login";
+            //TODO obavestiti korisnika o uspelim/neuspleim logovanju
         }
         return "redirect:/";
     }

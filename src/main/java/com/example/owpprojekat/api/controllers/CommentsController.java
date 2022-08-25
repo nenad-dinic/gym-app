@@ -27,12 +27,16 @@ public class CommentsController {
     @GetMapping(value = "/api/comments/training",
     produces = MediaType.APPLICATION_JSON_VALUE)
     List<CommentDto.Get> getCommentsForTraining(@RequestParam("id") String id) {
-        List<Comment> comments = commentRepo.findAllByTrainingId(parseLong(id));
-        List<CommentDto.Get> result = new ArrayList<>();
-        for (Comment c : comments) {
-            result.add(new CommentDto.Get(c.getId(), c.getText(), c.getRating(), c.getDate(), userRepo.findById(c.getUserId()).get().getUsername(), c.getTrainingId(), c.getStatus(), c.isAnonymous()));
+        try {
+            List<Comment> comments = commentRepo.findAllByTrainingId(parseLong(id));
+            List<CommentDto.Get> result = new ArrayList<>();
+            for (Comment c : comments) {
+                result.add(new CommentDto.Get(c.getId(), c.getText(), c.getRating(), c.getDate(), userRepo.findById(c.getUserId()).get().getUsername(), c.getTrainingId(), c.getStatus(), c.isAnonymous()));
+            }
+            return result;
+        } catch (Exception e) {
+            return null;
         }
-        return result;
     }
 
 

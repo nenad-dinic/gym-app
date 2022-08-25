@@ -25,6 +25,7 @@ public class RegisterPageController {
         UserDto.Get response = client.postForObject("http://localhost:8080/api/user", data, UserDto.Get.class);
         if (response == null) {
             return "redirect:/register";
+            //TODO obavestiti korisnika o uspelim/neuspleim registraciji
         }
         return "redirect:/login";
     }

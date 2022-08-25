@@ -18,9 +18,14 @@ public class UserController {
 
     @GetMapping(value = "/api/user",
     produces = MediaType.APPLICATION_JSON_VALUE)
-    User getUser(@RequestParam("id") String id) {
-        User u = userRepo.findById(Long.parseLong(id)).get();
-        return u;
+    UserDto.Get getUser(@RequestParam("id") String id) {
+        try {
+            User u = userRepo.findById(Long.parseLong(id)).get();
+            UserDto.Get result = new UserDto.Get(u.getId(), u.getUsername(), u.getEmail(), u.getName(), u.getLastname(), u.getDateOfBirth(), u.getAddress(), u.getPhoneNum(), u.getRegDateTime(), u.getRole());
+            return result;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @PostMapping(value = "/api/user",

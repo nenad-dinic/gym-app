@@ -28,12 +28,16 @@ public class ScheduleController {
     @GetMapping(value = "/api/schedule/training",
     produces = MediaType.APPLICATION_JSON_VALUE)
     List<ScheduleDto.Get> getSchedules(@RequestParam("id") String id) {
-        List<ScheduleDto.Get> result = new ArrayList<>();
-        List<Schedule> schedules = scheduleRepo.getSchedulesForTraining(Long.parseLong(id));
-        for (Schedule s : schedules) {
-            result.add (new ScheduleDto.Get(s.getId(), hallRepo.findById(s.getHallId()).get().getTag(), s.getTrainingId(), s.getDate()));
+        try {
+            List<ScheduleDto.Get> result = new ArrayList<>();
+            List<Schedule> schedules = scheduleRepo.getSchedulesForTraining(Long.parseLong(id));
+            for (Schedule s : schedules) {
+                result.add(new ScheduleDto.Get(s.getId(), hallRepo.findById(s.getHallId()).get().getTag(), s.getTrainingId(), s.getDate()));
+            }
+            return result;
+        } catch (Exception e) {
+            return null;
         }
-        return result;
     }
 
     @PostMapping(value = "/api/schedule",
