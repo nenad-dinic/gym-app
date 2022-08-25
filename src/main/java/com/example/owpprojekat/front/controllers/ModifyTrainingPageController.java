@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class ModifyTrainingPage {
+public class ModifyTrainingPageController {
 
     RestTemplate client = new RestTemplate();
 
@@ -36,7 +36,7 @@ public class ModifyTrainingPage {
         }
 
         TrainingDto.Add data = new TrainingDto.Add();
-        if(training != null) {
+        if (training != null) {
             data.setName(training.getName());
             data.setTrainers(training.getTrainers());
             data.setDescription(training.getDescription());

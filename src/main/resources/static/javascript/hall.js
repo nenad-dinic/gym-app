@@ -6,3 +6,8 @@ async function deleteH(id) {
         window.location.reload();
     }
 }
+
+function update(id) {
+    window.location.href = "/hall?id=" + id;
+
+}
