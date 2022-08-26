@@ -12,12 +12,13 @@ public interface TrainingRepo extends JpaRepository<Training, Long> {
             "INNER JOIN SCHEDULE s ON t.id = s.training_id " +
             "INNER JOIN hall h ON s.hall_id = h.id " +
             "WHERE (SELECT COUNT(*) FROM reservation r " +
-            "WHERE r.schedule_id = s.id) < h.capacity;", nativeQuery = true)
+            "WHERE r.schedule_id = s.id) < h.capacity " +
+            "ORDER BY t.id DESC;", nativeQuery = true)
     List<Training> getAvailable();
 
     @Query(value = "SELECT tt.name FROM training t " +
             "INNER JOIN training_to_type ttt ON t.id = ttt.training_id " +
             "INNER JOIN training_type tt ON ttt.type_id = tt.id " +
             "WHERE t.id = :id ;", nativeQuery = true)
-    String getTrainingType(Long id);
+    List<String> getTrainingTypes(Long id);
 }

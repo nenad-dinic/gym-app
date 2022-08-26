@@ -1,9 +1,12 @@
 let lastSortedColumn = -1;
 
+let direction = 1;
+
 function sortTable(column, tableId) {
-    let direction = 0;
     if (lastSortedColumn == column) {
         direction = !direction;
+    } else {
+        direction = 1;
     }
     lastSortedColumn = column;
 
@@ -18,7 +21,7 @@ function sortTable(column, tableId) {
 
             if (x < y && direction == 0) {
                 rows[i].parentNode.insertBefore(rows[j], rows[i]);
-            } else {
+            } else if (x > y && direction == 1) {
                 rows[i].parentNode.insertBefore(rows[j], rows[i]);
             }
         }

@@ -8,6 +8,7 @@
     <script defer th:src="@{/javascript/utils.js}"></script>
 </head>
 <body>
+<div th:insert="fragments::title"></div>
 <div th:insert="fragments::navigation"></div>
 <br>
 
@@ -48,7 +49,7 @@
     <tr th:each="training:${trainings}">
         <td><img th:src="${training.pic}"></td>
         <td><a th:href="@{/training/(id=${training.id})} " th:text="${training.name}"></a></td>
-        <td th:text="${training.type}"></td>
+        <td th:text="${training.types}"></td>
         <td th:text="${training.price}"></td>
         <td th:text="${training.trainers}"></td>
         <td th:text="${training.group}"></td>

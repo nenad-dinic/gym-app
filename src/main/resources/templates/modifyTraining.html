@@ -17,7 +17,7 @@
     <label for="pic">Picture:</label>
     <input type="text" id="pic" th:field="*{pic}">
     <label for="price">Price:</label>
-    <input type="number" id="price" th:field="*{price}">
+    <input type="number" id="price" min="100" max="1000" step="50" th:field="*{price}">
     <label for="group">Group:</label>
     <select id="group" th:field="*{group}">
         <option value="true">Yes</option>

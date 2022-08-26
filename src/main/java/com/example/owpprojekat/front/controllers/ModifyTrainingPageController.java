@@ -45,6 +45,9 @@ public class ModifyTrainingPageController {
             data.setGroup(training.isGroup());
             data.setDifficulty(training.getDifficulty());
             data.setDuration(training.getDuration());
+        } else {
+            data.setPrice(100);
+            data.setDuration(30);
         }
         model.addAttribute("data", data);
         return "modifyTraining";

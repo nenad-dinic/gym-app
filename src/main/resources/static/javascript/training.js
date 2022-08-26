@@ -8,13 +8,18 @@ if (localStorage.getItem("cart") != undefined) {
 let wishlist = [];
 if (localStorage.getItem("wishlist") !=undefined) {
     wishlist = JSON.parse(localStorage.getItem("wishlist"));
+} else {
+    wishlist = [];
 }
 
-function addToCart(id) {
-    if (!cart.includes(id)) {
+async function addToCart(id) {
+    /*if (!cart.includes(id)) {
         cart.push(id);
     }
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));*/
+    let response = await fetch("/api/cart/add?id=" + id, {
+        method:"post"
+    })
 }
 
 function addToWishlist(id) {

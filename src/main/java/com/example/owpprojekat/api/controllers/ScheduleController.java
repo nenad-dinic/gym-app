@@ -56,4 +56,16 @@ public class ScheduleController {
             return null;
         }
     }
+
+    @GetMapping(value = "/api/schedule",
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    ScheduleDto.Get getSchedule(@RequestParam("id") String id) {
+        try {
+            Schedule s = scheduleRepo.findById(Long.parseLong(id)).get();
+            ScheduleDto.Get result = new ScheduleDto.Get(s.getId(), hallRepo.findById(s.getHallId()).get().getTag(), s.getTrainingId(), s.getDate());
+            return result;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

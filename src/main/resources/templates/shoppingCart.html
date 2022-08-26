@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping cart</title>
+</head>
+<body>
+    <div th:insert="fragments::title"></div>
+    <div th:insert="fragments::navigation"></div>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Trainer</th>
+            <th>Type</th>
+            <th>Date and time</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="schedule:${schedules}">
+            <td th:text="test"></td>
+            <td th:text="test"></td>
+            <td th:text="test"></td>
+            <td th:text="${schedule.date}"></td>
+            <td th:text="test"></td>
+            <td><button th:onclick="removeFromCart([[${schedule.id}]])">Remove</button></td>
+        </tr>
+    </table>
+</body>
+</html>

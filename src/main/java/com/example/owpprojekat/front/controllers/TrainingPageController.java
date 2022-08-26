@@ -3,13 +3,16 @@ package com.example.owpprojekat.front.controllers;
 import com.example.owpprojekat.api.dto.CommentDto;
 import com.example.owpprojekat.api.dto.ScheduleDto;
 import com.example.owpprojekat.api.dto.TrainingDto;
+import com.example.owpprojekat.front.data.Cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,7 @@ public class TrainingPageController {
 
     @Autowired
     private HttpServletRequest request;
+
 
     @GetMapping("/training")
     public String training(Model model) {
@@ -35,4 +39,6 @@ public class TrainingPageController {
         model.addAttribute("data", training);
         return "training";
     }
+
+
 }
