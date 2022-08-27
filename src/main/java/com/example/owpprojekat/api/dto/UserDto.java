@@ -23,8 +23,9 @@ public class UserDto {
         private String phoneNum;
         private LocalDateTime regDateTime;
         private Role role;
+        private boolean isBlocked;
 
-        public Get(Long id, String username, String email, String name, String lastname, Date dateOfBirth, String address, String phoneNum, LocalDateTime regDateTime, Role role) {
+        public Get(Long id, String username, String email, String name, String lastname, Date dateOfBirth, String address, String phoneNum, LocalDateTime regDateTime, Role role, boolean isBlocked) {
             this.id = id;
             this.username = username;
             this.email = email;
@@ -35,6 +36,7 @@ public class UserDto {
             this.phoneNum = phoneNum;
             this.regDateTime = regDateTime;
             this.role = role;
+            this.isBlocked = isBlocked;
         }
 
         public Get() {

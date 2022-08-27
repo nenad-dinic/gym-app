@@ -26,8 +26,9 @@ public class User {
     private String phoneNum;
     private LocalDateTime regDateTime;
     private Role role;
+    private boolean isBlocked;
 
-    public User(String username, String password, String email, String name, String lastname, Date dateOfBirth, String address, String phoneNum, LocalDateTime regDateTime, Role role) {
+    public User(String username, String password, String email, String name, String lastname, Date dateOfBirth, String address, String phoneNum, LocalDateTime regDateTime, Role role, boolean isBlocked) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -36,8 +37,9 @@ public class User {
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.phoneNum = phoneNum;
-        this.regDateTime = LocalDateTime.now();
+        this.regDateTime = regDateTime;
         this.role = role;
+        this.isBlocked = isBlocked;
     }
 
     public User() {
