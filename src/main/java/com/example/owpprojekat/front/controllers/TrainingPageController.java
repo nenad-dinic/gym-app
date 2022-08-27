@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class TrainingPageController {
 
 
     @GetMapping("/training")
-    public String training(Model model) {
+    public String training(Model model, HttpSession session) {
         Long id = Long.valueOf(request.getParameter("id"));
         TrainingDto.Get training = client.getForObject("http://localhost:8080/api/training?id=" + id, TrainingDto.Get.class);
         List<ScheduleDto.Get> schedule = new ArrayList<>();

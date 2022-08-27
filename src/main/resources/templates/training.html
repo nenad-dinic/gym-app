@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link th:href="@{/styles/main.css}" rel="stylesheet">
     <script defer th:src="@{/javascript/training.js}"></script>
+    <script defer th:src="@{/javascript/cart.js}"></script>
+
 </head>
 <body>
 <div th:insert="fragments::navigation"></div>
-
 
 <p><img th:src="@{/images/default.jpg}"></p>
 <p th:text="${data.name}"></p>
@@ -19,8 +21,12 @@
 <p th:text="${data.difficulty}"></p>
 <p th:text="${data.duration}"></p>
 <p th:text="${data.rating}"></p>
-<button th:onclick="addToWishlist([[${data.id}]])">Add to wishlist</button>
-<button th:onclick="editTraining([[${data.id}]])">Edit training</button>
+<div th:if="${session.user != null}" style="display: inline-block">
+    <button th:onclick="addToWishlist([[${data.id}]])">Add to wishlist</button>
+</div>
+<div th:if="${session.user != null && session.user.role.name() == 'ADMIN'}" style="display: inline-block">
+    <button th:onclick="editTraining([[${data.id}]])">Edit training</button>
+</div>
 
 <h2>Schedule:</h2>
 <table>
@@ -37,7 +43,9 @@
 </table>
 
 <h2>Comments:</h2>
-<button>Add comment</button>
+<div th:if="${session.user != null}" style="display: inline-block">
+    <button>Add comment</button>
+</div>
 <table>
     <tr>
         <th>Comment by</th>

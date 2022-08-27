@@ -9,11 +9,18 @@
   <nav th:fragment="navigation">
     <a href="/">home</a>
     <a href="/profile">profile</a>
-    <a href="/admin">admin</a>
+    <div th:if="${session.user != null && session.user.role.name() == 'ADMIN'}" style="display: inline-block">
+      <a href="/admin">admin</a>
+    </div>
     <a href="/wishlist">wishlist</a>
     <a href="/cart">cart</a>
-    <a href="/login">login</a>
-    <a href="/register">register</a>
+    <div th:if="${session.user == null}" style="display: inline-block">
+      <a href="/login">login</a>
+      <a href="/register">register</a>
+    </div>
+    <div th:if="${session.user != null}" style="display: inline-block">
+      <a href="/logout">logout</a>
+    </div>
   </nav>
 </body>
 </html>
