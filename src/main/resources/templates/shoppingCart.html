@@ -10,6 +10,7 @@
 <body>
     <div th:insert="fragments::title"></div>
     <div th:insert="fragments::navigation"></div>
+    <br>
     <table>
         <tr>
             <th>Name</th>
@@ -19,14 +20,16 @@
             <th>Price</th>
             <th>Action</th>
         </tr>
-        <tr th:each="schedule:${schedules}">
-            <td th:text="test"></td>
-            <td th:text="test"></td>
-            <td th:text="test"></td>
-            <td th:text="${schedule.date}"></td>
-            <td th:text="test"></td>
-            <td><button th:onclick="removeFromCart([[${schedule.id}]])">Remove</button></td>
+        <tr th:each="item:${items}">
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.trainers}"></td>
+            <td th:text="${item.types}"></td>
+            <td th:text="${item.date}"></td>
+            <td th:text="${item.price}"></td>
+            <td><button th:onclick="removeFromCart([[${item.id}]])">Remove</button></td>
         </tr>
     </table>
+    <p>Full price:</p>
+<button>Submit</button>
 </body>
 </html>

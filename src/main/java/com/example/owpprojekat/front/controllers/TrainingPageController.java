@@ -5,12 +5,11 @@ import com.example.owpprojekat.api.dto.ScheduleDto;
 import com.example.owpprojekat.api.dto.TrainingDto;
 import com.example.owpprojekat.front.data.Cart;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,5 +40,16 @@ public class TrainingPageController {
         return "training";
     }
 
+    @PostMapping(value = "/cart/add",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
+    public void addToCart(@RequestParam("id") String id, HttpSession session) {
+        if (session.getAttribute("cart") == null) {
+            session.setAttribute("cart", new Cart());
+        }
+        Cart cart = (Cart) session.getAttribute("cart");
+        cart.addToCart(Long.parseLong(id));
+        session.setAttribute("cart", cart);
+    }
 
 }

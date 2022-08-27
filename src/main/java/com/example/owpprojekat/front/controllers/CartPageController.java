@@ -1,10 +1,16 @@
 package com.example.owpprojekat.front.controllers;
 
+import com.example.owpprojekat.api.dto.CartItemDto;
 import com.example.owpprojekat.api.dto.ScheduleDto;
 import com.example.owpprojekat.front.data.Cart;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpSession;
@@ -22,11 +28,20 @@ public class CartPageController {
             session.setAttribute("cart", new Cart());
         }
         Cart cart = (Cart) session.getAttribute("cart");
-        List<ScheduleDto.Get> schedules = new ArrayList<>();
-        for (Long id : cart.getItems()) {
-            schedules.add(client.getForObject("http://localhost:8080/api/schedule?id=" + id, ScheduleDto.Get.class));
-        }
-        model.addAttribute("schedules", schedules);
+        List<CartItemDto.Get> items = new ArrayList<>();
+        items = client.postForObject("http://localhost:8080/api/cart", new CartItemDto.CartItems(cart.getItems()), items.getClass());
+        model.addAttribute("items", items);
         return "shoppingCart";
+    }
+
+    @PostMapping(value = "/cart/remove",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
+    public void removeFromCart(@RequestParam("id") String id, HttpSession session) {
+        if (session.getAttribute("cart") == null) {
+            session.setAttribute("cart", new Cart());
+        }
+        Cart cart = (Cart) session.getAttribute("cart");
+        cart.removeFromCart(Long.parseLong(id));
     }
 }
