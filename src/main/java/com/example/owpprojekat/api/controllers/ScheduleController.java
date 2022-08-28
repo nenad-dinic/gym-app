@@ -28,6 +28,7 @@ public class ScheduleController {
     @GetMapping(value = "/api/schedule/training",
     produces = MediaType.APPLICATION_JSON_VALUE)
     List<ScheduleDto.Get> getSchedules(@RequestParam("id") String id) {
+        //TODO ne prikazati schedule koji je istekao ili se odrzava za manje od 24h
         try {
             List<ScheduleDto.Get> result = new ArrayList<>();
             List<Schedule> schedules = scheduleRepo.getSchedulesForTraining(Long.parseLong(id));

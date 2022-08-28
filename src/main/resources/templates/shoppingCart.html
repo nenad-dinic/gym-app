@@ -11,7 +11,7 @@
     <div th:insert="fragments::title"></div>
     <div th:insert="fragments::navigation"></div>
     <br>
-    <table>
+    <table id="cartTable">
         <tr>
             <th>Name</th>
             <th>Trainer</th>
@@ -29,7 +29,7 @@
             <td><button th:onclick="removeFromCart([[${item.id}]])">Remove</button></td>
         </tr>
     </table>
-    <p>Full price:</p>
-<button>Submit</button>
+    <p>Full price:<span id="fullPrice"></span></p>
+<button th:disabled="${session.user == null}">Submit</button>
 </body>
 </html>

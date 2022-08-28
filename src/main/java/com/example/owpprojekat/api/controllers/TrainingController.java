@@ -69,6 +69,7 @@ public class TrainingController {
     produces = MediaType.APPLICATION_JSON_VALUE,
     consumes = MediaType.APPLICATION_JSON_VALUE)
     TrainingDto.Get postTraining(@RequestBody TrainingDto.Add data) {
+        //TODO dodati dodelu tipa
         try {
             Training t = trainingRepo.save(new Training(data.getName(), data.getTrainers(), data.getDescription(), data.getPic(), data.getPrice(), data.isGroup(), data.getDifficulty(), data.getDuration()));
             TrainingDto.Get result = new TrainingDto.Get(t.getId(), t.getName(), t.getTrainers(), t.getDescription(), t.getPic(), t.getPrice(), t.isGroup(), t.getDifficulty(), t.getDuration(), 0, trainingRepo.getTrainingTypes(t.getId()));

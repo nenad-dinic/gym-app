@@ -1,9 +1,6 @@
 package com.example.owpprojekat.api;
 
-import com.example.owpprojekat.api.repositories.CommentRepo;
-import com.example.owpprojekat.api.repositories.TrainingRepo;
-import com.example.owpprojekat.api.repositories.TrainingTypeRepo;
-import com.example.owpprojekat.api.repositories.UserRepo;
+import com.example.owpprojekat.api.repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -39,6 +36,13 @@ public class DataBaseConfig {
     CommandLineRunner initTrainingTypes(TrainingTypeRepo repo) {
         return args -> {
             log.info("Training types initialized");
+        };
+    }
+
+    @Bean
+    CommandLineRunner initReservations(ReservationRepo repo) {
+        return args -> {
+            log.info("Reservations initialized");
         };
     }
 }

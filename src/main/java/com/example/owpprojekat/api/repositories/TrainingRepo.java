@@ -11,7 +11,7 @@ public interface TrainingRepo extends JpaRepository<Training, Long> {
     @Query(value = "SELECT DISTINCT t.* FROM training t " +
             "INNER JOIN SCHEDULE s ON t.id = s.training_id " +
             "INNER JOIN hall h ON s.hall_id = h.id " +
-            "WHERE (SELECT COUNT(*) FROM reservation r " +
+            "WHERE (SELECT COUNT(*) FROM reservation_to_schedule r " +
             "WHERE r.schedule_id = s.id) < h.capacity " +
             "ORDER BY t.id DESC;", nativeQuery = true)
     List<Training> getAvailable();
