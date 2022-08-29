@@ -12,8 +12,8 @@ public class ReservationDto {
     @Setter
     public static class Add {
         private Long userId;
-        private int price;
         private List<Long> schedules;
+        private int pointsUsed;
     }
 
     @Getter

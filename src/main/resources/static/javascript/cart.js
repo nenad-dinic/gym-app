@@ -20,4 +20,14 @@ function calcFullPrice() {
     priceText.innerText = price;
 }
 
+function calcActualPrice() {
+    let actualPrice = document.getElementById("actualPrice");
+    let points = document.getElementById("points");
+    let fullPrice = parseInt(document.getElementById("fullPrice").innerText);
+    points.value = Math.min(Math.max(points.value, 0), 5)
+    actualPrice.innerText = fullPrice * (1 - (points.value * 0.05));
+
+}
+
 calcFullPrice();
+calcActualPrice()

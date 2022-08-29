@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Shopping cart</title>
@@ -29,7 +29,12 @@
             <td><button th:onclick="removeFromCart([[${item.id}]])">Remove</button></td>
         </tr>
     </table>
-    <p>Full price:<span id="fullPrice"></span></p>
-<button th:disabled="${session.user == null}">Submit</button>
+    <form action="#" th:action="@{/cart}" method="post" th:object="${data}">
+        <p>Full price:<span id="fullPrice"></span></p>
+        <label for="points">Use points:</label>
+        <input type="number" min="0", max="5" id="points" th:onchange="calcActualPrice()" th:field="*{pointsUsed}">
+        <p>Price with discount (if applicable):<span id="actualPrice"></span></p>
+        <button th:disabled="${session.user == null}" type="submit">Submit</button>
+    </form>
 </body>
 </html>

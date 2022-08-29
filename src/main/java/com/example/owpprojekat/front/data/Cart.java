@@ -19,4 +19,8 @@ public class Cart {
     public List<Long> getItems() {
         return cart;
     }
+
+    public void clear() {
+        cart.clear();
+    }
 }
