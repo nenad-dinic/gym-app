@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:insert="fragments::navigation"></div>
+<form action="#" th:action="@{/editProfile}" method="post" th:object="${data}">
+    <label for="username">Username:</label>
+    <input type="text" id="username" th:field="*{username}">
+    <label for="email">Email:</label>
+    <input type="email" id="email" th:field="*{email}">
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}">
+    <label for="lastname">Lastname:</label>
+    <input type="text" id="lastname" th:field="*{lastname}">
+    <label for="dateOfBirth">Date of birth:</label>
+    <input type="date" id="dateOfBirth" th:field="*{dateOfBirth}">
+    <label for="address">Address:</label>
+    <input type="text" id="address" th:field="*{address}">
+    <label for="phoneNum">Phone number:</label>
+    <input type="text" id="phoneNum" th:field="*{phoneNum}">
+    <label for="password">Password:</label>
+    <input type="password" id="password" th:field="*{password}">
+    <label for="repeatPassword">Repeat password:</label>
+    <input type="password" id="repeatPassword">
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>

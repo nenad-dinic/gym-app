@@ -10,15 +10,24 @@
 <div th:insert="fragments::navigation"></div>
 
 <p><img th:src="@{/images/default.jpg}"></p>
-<p th:text="${data.name}"></p>
-<p th:text="${data.types}"></p>
-<p th:text="${data.price}"></p>
-<p th:text="${data.trainers}"></p>
-<p th:text="${data.description}"></p>
-<p th:text="${data.group}"></p>
-<p th:text="${data.difficulty}"></p>
-<p th:text="${data.duration}"></p>
-<p th:text="${data.rating}"></p>
+<label for="name" style="font-weight: bold">Name:</label>
+<p id="name" th:text="${data.name}"></p>
+<label for="types" style="font-weight: bold">Types:</label>
+<p id="types" th:text="${data.types}"></p>
+<label for="price" style="font-weight: bold">Price:</label>
+<p id="price" th:text="${data.price}"></p>
+<label for="trainers" style="font-weight: bold">Trainers:</label>
+<p id="trainers" th:text="${data.trainers}"></p>
+<label for="description" style="font-weight: bold">Description:</label>
+<p id="description" th:text="${data.description}"></p>
+<label for="group" style="font-weight: bold">Group:</label>
+<p id="group" th:text="${data.group}"></p>
+<label for="difficulty" style="font-weight: bold">Difficulty:</label>
+<p id="difficulty" th:text="${data.difficulty}"></p>
+<label for="duration" style="font-weight: bold">Duration:</label>
+<p id="duration" th:text="${data.duration}"></p>
+<label for="rating" style="font-weight: bold">Rating:</label>
+<p id="rating" th:text="${data.rating}"></p>
 <div th:if="${session.user != null}" style="display: inline-block">
     <button th:onclick="addToWishlist([[${data.id}]])">Add to wishlist</button>
 </div>

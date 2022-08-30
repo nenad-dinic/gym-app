@@ -27,7 +27,7 @@ public class TrainingPageController {
 
 
     @GetMapping("/training")
-    public String training(Model model, HttpSession session) {
+    public String training(Model model) {
         Long id = Long.valueOf(request.getParameter("id"));
         TrainingDto.Get training = client.getForObject("http://localhost:8080/api/training?id=" + id, TrainingDto.Get.class);
         List<ScheduleDto.Get> schedule = new ArrayList<>();
