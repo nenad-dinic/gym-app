@@ -2,9 +2,14 @@ package com.example.owpprojekat.front.controllers;
 
 import com.example.owpprojekat.api.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,13 +30,15 @@ public class EditProfilePageController {
         try {
             id = Long.parseLong(request.getParameter("id"));
             user = client.getForObject("http://localhost:8080/api/user?id=" + id, UserDto.Get.class);
+            if (user == null) {
+                return "redirect:/profile?id=" + id;
+            }
         } catch (Exception e) {
             user = null;
             id = null;
         }
-        //TODO napravi userDto.Update i zameni
-        //TODO posalji id korisnika kad se stisne dugme edit
-        UserDto.Add data = new UserDto.Add();
+
+        UserDto.Update data = new UserDto.Update();
         if (user != null) {
             data.setUsername(user.getUsername());
             data.setEmail(user.getEmail());
@@ -45,5 +52,16 @@ public class EditProfilePageController {
 
         model.addAttribute("data", data);
         return "editProfile";
+    }
+
+    @PostMapping("/editProfile")
+    public String postEditProfile(@ModelAttribute UserDto.Update data, Model model) {
+        model.addAttribute("data", data);
+        ResponseEntity<UserDto.Get> response;
+        response = client.exchange("http://localhost:8080/api/user?id=" + id, HttpMethod.PUT, new HttpEntity<>(data), UserDto.Get.class);
+        if (!response.hasBody()) {
+            return "redirect:/editProfile?id=" + id;
+        }
+        return "redirect:/profile?id=" + id;
     }
 }

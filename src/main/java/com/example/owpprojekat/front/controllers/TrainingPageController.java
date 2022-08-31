@@ -28,8 +28,16 @@ public class TrainingPageController {
 
     @GetMapping("/training")
     public String training(Model model) {
-        Long id = Long.valueOf(request.getParameter("id"));
+        Long id;
+        try {
+            id = Long.valueOf(request.getParameter("id"));
+        } catch (Exception e) {
+            return "redirect:/";
+        }
         TrainingDto.Get training = client.getForObject("http://localhost:8080/api/training?id=" + id, TrainingDto.Get.class);
+        if (training == null) {
+            return "redirect:/";
+        }
         List<ScheduleDto.Get> schedule = new ArrayList<>();
         schedule = client.getForObject("http://localhost:8080/api/schedule/training?id=" + id, schedule.getClass());
         List<CommentDto.Get> comments = new ArrayList<>();

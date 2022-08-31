@@ -30,6 +30,9 @@ public class ModifyTrainingPageController {
         try {
             id = Long.valueOf(request.getParameter("id"));
             training = client.getForObject("http://localhost:8080/api/training?id=" + id, TrainingDto.Get.class);
+            if (training == null) {
+                id = null;
+            }
         } catch (Exception e) {
             training = null;
             id = null;
@@ -64,8 +67,8 @@ public class ModifyTrainingPageController {
         }
 
         //TODO obavestiti korisnika o uspelim/neuspleim dodavanjima/izmenama
-        if (response == null) {
-            return "redirect:/";
+        if (!response.hasBody()) {
+            return "redirect:/training/modify?id=" + id;
         }
         return "redirect:/";
     }

@@ -20,5 +20,6 @@ public class AdminPageController {
         halls = client.getForObject("http://localhost:8080/api/halls", halls.getClass());
         model.addAttribute("halls", halls);
         return "admin";
+        //TODO ako nije admin redirect na home
     }
 }

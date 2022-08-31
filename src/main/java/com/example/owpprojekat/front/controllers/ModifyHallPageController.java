@@ -30,6 +30,9 @@ public class ModifyHallPageController {
         try {
             id = Long.parseLong(request.getParameter("id"));
             hall = client.getForObject("http://localhost:8080/api/hall?id=" + id, HallDto.Get.class);
+            if (hall == null) {
+                id = null;
+            }
         } catch (Exception e) {
             hall = null;
             id = null;
@@ -57,8 +60,8 @@ public class ModifyHallPageController {
         }
 
         //TODO obavestiti korisnika o uspelim/neuspleim dodavanjima/izmenama
-        if (response == null) {
-            return "redirect:/hall";
+        if (!response.hasBody()) {
+            return "redirect:/hall?id=" + id;
         }
         return "redirect:/admin";
     }

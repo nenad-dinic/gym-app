@@ -19,8 +19,16 @@ public class ProfilePageController {
 
     @GetMapping("/profile")
     public String profile(Model model) {
-        Long id = Long.parseLong(request.getParameter("id"));
+        Long id;
+        try {
+            id = Long.parseLong(request.getParameter("id"));
+        } catch (Exception e) {
+            return "redirect:/";
+        }
         UserDto.Get user = client.getForObject("http://localhost:8080/api/user?id=" + id, UserDto.Get.class);
+        if (user == null) {
+            return "redirect:/";
+        }
         model.addAttribute("data", user);
         return "profile";
     }

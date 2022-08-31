@@ -3,8 +3,6 @@ package com.example.owpprojekat.front.controllers;
 import com.example.owpprojekat.api.dto.HallDto;
 import com.example.owpprojekat.api.dto.ScheduleDto;
 import com.example.owpprojekat.api.dto.TrainingDto;
-import com.example.owpprojekat.api.models.Schedule;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class SchedulePageController {
+public class ModifySchedulePageController {
 
     RestTemplate client = new RestTemplate();
 

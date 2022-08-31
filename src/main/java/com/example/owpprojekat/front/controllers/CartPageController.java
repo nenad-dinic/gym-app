@@ -56,7 +56,7 @@ public class CartPageController {
             cart.clear();
             session.setAttribute("cart", cart);
             //TODO redirect to profile
-            return "redirect:/cart";
+            return "redirect:/profile?id=" + user.getId();
         }
 
         return "redirect:/cart";

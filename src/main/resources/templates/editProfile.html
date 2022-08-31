@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link th:href="@{/styles/form.css}" rel="stylesheet">
+    <script defer th:src="@{/javascript/editProfile.js}"></script>
 </head>
 <body>
 <div th:insert="fragments::navigation"></div>
@@ -22,10 +24,11 @@
     <label for="phoneNum">Phone number:</label>
     <input type="text" id="phoneNum" th:field="*{phoneNum}">
     <label for="password">Password:</label>
-    <input type="password" id="password" th:field="*{password}">
+    <input onchange="checkPasswords()" onkeydown="checkPasswords()" onpaste="checkPasswords()" oninput="checkPasswords()" type="password" id="password" th:field="*{password}">
     <label for="repeatPassword">Repeat password:</label>
-    <input type="password" id="repeatPassword">
-    <button type="submit">Submit</button>
+    <input onchange="checkPasswords()" onkeydown="checkPasswords()" onpaste="checkPasswords()" oninput="checkPasswords()" type="password" id="repeatPassword">
+    <p id="errorMsg">Passwords must match!</p>
+    <button id="submit" type="submit">Submit</button>
 </form>
 
 </body>

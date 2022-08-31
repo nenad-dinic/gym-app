@@ -64,4 +64,18 @@ public class UserDto {
         private String username;
         private String password;
     }
+
+    @Getter
+    @Setter
+    public static class Update {
+        private String username;
+        private String password;
+        private String email;
+        private String name;
+        private String lastname;
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        private Date dateOfBirth;
+        private String address;
+        private String phoneNum;
+    }
 }
