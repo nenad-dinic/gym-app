@@ -14,7 +14,6 @@
     <div th:if="${session.user != null && session.user.role.name() == 'ADMIN'}" style="display: inline-block">
       <a href="/admin">admin</a>
     </div>
-    <a href="/wishlist">wishlist</a>
     <a href="/cart">cart</a>
     <div th:if="${session.user == null}" style="display: inline-block">
       <a href="/login">login</a>

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script defer th:src="@{/javascript/profile.js}"></script>
 
 </head>
 <body>
@@ -28,9 +29,9 @@
 <p id="regDate" th:text="${data.regDateTime}"></p>
 <label for="role" style="font-weight: bold">Role:</label>
 <p id="role" th:text="${data.role}"></p>
-
-<button th:onclick="'location.href=' + '\'/profile/edit?id=' + ${session.user.id} + '\''">Edit profile</button>
-<button>Request loyalty card</button>
-
+<div th:if="${session.user != null && data.id == session.user.id}">
+    <button th:onclick="'location.href=' + '\'/profile/edit?id=' + ${data.id} + '\''">Edit profile</button>
+    <button th:onclick="'createLoyaltyCardRequest('+ ${data.id} + ')'">Request loyalty card</button>
+</div>
 </body>
 </html>
