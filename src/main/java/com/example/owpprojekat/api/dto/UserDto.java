@@ -69,7 +69,6 @@ public class UserDto {
     @Setter
     public static class Update {
         private String username;
-        private String password;
         private String email;
         private String name;
         private String lastname;
@@ -77,5 +76,7 @@ public class UserDto {
         private Date dateOfBirth;
         private String address;
         private String phoneNum;
+        private String oldPassword;
+        private String password;
     }
 }

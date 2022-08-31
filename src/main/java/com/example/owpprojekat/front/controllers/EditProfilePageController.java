@@ -47,20 +47,23 @@ public class EditProfilePageController {
             data.setDateOfBirth(user.getDateOfBirth());
             data.setAddress(user.getAddress());
             data.setPhoneNum(user.getPhoneNum());
+            data.setOldPassword("");
             data.setPassword("");
+        } else {
+            return "redirect:/profile?id=" + id;
         }
 
         model.addAttribute("data", data);
         return "editProfile";
     }
 
-    @PostMapping("/editProfile")
+    @PostMapping("/profile/edit")
     public String postEditProfile(@ModelAttribute UserDto.Update data, Model model) {
         model.addAttribute("data", data);
         ResponseEntity<UserDto.Get> response;
         response = client.exchange("http://localhost:8080/api/user?id=" + id, HttpMethod.PUT, new HttpEntity<>(data), UserDto.Get.class);
         if (!response.hasBody()) {
-            return "redirect:/editProfile?id=" + id;
+            return "redirect:/profile/edit?id=" + id;
         }
         return "redirect:/profile?id=" + id;
     }
