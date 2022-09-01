@@ -6,12 +6,16 @@ import com.example.owpprojekat.api.models.LoyaltyCard;
 import com.example.owpprojekat.api.models.LoyaltyCardRequest;
 import com.example.owpprojekat.api.repositories.LoyaltyCardRepo;
 import com.example.owpprojekat.api.repositories.LoyaltyCardRequestRepo;
+import com.example.owpprojekat.api.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class LoyaltyCardController {
@@ -22,6 +26,9 @@ public class LoyaltyCardController {
     @Autowired
     LoyaltyCardRepo loyaltyCardRepo;
 
+    @Autowired
+    UserRepo userRepo;
+
     @PostMapping(value = "/api/card/request",
     produces = MediaType.APPLICATION_JSON_VALUE)
     LoyaltyCardRequestDto.Get createRequest(@RequestBody LoyaltyCardRequestDto.Add data) {
@@ -30,7 +37,22 @@ public class LoyaltyCardController {
                 return null;
             }
             LoyaltyCardRequest lcr = lcrRepo.save(new LoyaltyCardRequest(data.getUserId()));
-            LoyaltyCardRequestDto.Get result = new LoyaltyCardRequestDto.Get(lcr.getId(), lcr.getUserId());
+            LoyaltyCardRequestDto.Get result = new LoyaltyCardRequestDto.Get(lcr.getId(), userRepo.findById(lcr.getUserId()).get().getUsername());
+            return result;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @GetMapping(value = "/api/card/request",
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    List<LoyaltyCardRequestDto.Get> getRequests() {
+        try {
+            List<LoyaltyCardRequestDto.Get> result = new ArrayList<>();
+            List<LoyaltyCardRequest> requests = lcrRepo.findAll();
+            for (LoyaltyCardRequest lcr : requests) {
+                result.add(new LoyaltyCardRequestDto.Get(lcr.getId(), userRepo.findById(lcr.getUserId()).get().getUsername()));
+            }
             return result;
         } catch (Exception e) {
             return null;

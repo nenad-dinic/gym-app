@@ -3,6 +3,9 @@ package com.example.owpprojekat.front.controllers;
 import com.example.owpprojekat.api.dto.LoyaltyCardRequestDto;
 import com.example.owpprojekat.api.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class ProfilePageController {
@@ -46,5 +48,25 @@ public class ProfilePageController {
             return "redirect:/profile?id=" + id;
         }
         return "redirect:/profile?id=" + id;
+    }
+
+    @PostMapping("/profile/block")
+    public String block(@RequestParam("id") String id) {
+        ResponseEntity<UserDto.Get> response = client.exchange("http://localhost:8080/api/user/block?id=" + id, HttpMethod.PUT, new HttpEntity<>(null), UserDto.Get.class);
+        if (!response.hasBody()) {
+            return "redirect:/profile?id=" + id;
+        }
+        return "redirect:/profile?id=" + id;
+        //TODO ne refresh stranicu ispitati zasto
+    }
+
+    @PostMapping("profile/admin")
+    public String admin(@RequestParam("id") String id) {
+        ResponseEntity<UserDto.Get> response = client.exchange("http://localhost:8080/api/user/admin?id=" + id, HttpMethod.PUT, new HttpEntity<>(null), UserDto.Get.class);
+        if (!response.hasBody()) {
+            return "redirect:/profile?id=" + id;
+        }
+        return "redirect:/profile?id=" + id;
+        //TODO ne refresh stranicu ispitati zasto
     }
 }

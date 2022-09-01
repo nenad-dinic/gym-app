@@ -48,7 +48,7 @@
     </tr>
     <tr th:each="training:${trainings}">
         <td><img th:src="${training.pic}"></td>
-        <td><a th:href="@{/training/(id=${training.id})} " th:text="${training.name}"></a></td>
+        <td><a th:href="@{/training/(id=${training.id})}" th:text="${training.name}"></a></td>
         <td th:text="${training.types}"></td>
         <td th:text="${training.price}"></td>
         <td th:text="${training.trainers}"></td>

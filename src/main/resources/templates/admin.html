@@ -6,6 +6,8 @@
     <link th:href="@{/styles/main.css}" rel="stylesheet">
     <script defer th:src="@{/javascript/utils.js}"></script>
     <script defer th:src="@{/javascript/hall.js}"></script>
+    <script defer th:src="@{/javascript/admin.js}"></script>
+
 </head>
 <body>
 <div th:insert="fragments::navigation"></div>
@@ -40,5 +42,45 @@
 <br>
 <h2>Users</h2>
 <br>
+<label for="username">Username:</label>
+<input id="username">
+<label for="role"></label>
+<select id="role">
+    <option value="">Any</option>
+    <option value="MEMBER">Member</option>
+    <option value="ADMIN">Admin</option>
+</select>
+<button onclick="filterUsers()">Search</button>
+<br>
+<table id="userTable">
+    <tr>
+        <th onclick="sortTable(0, 'userTable')">Username</th>
+        <th onclick="sortTable(1, 'userTable')">Role</th>
+        <th>Registration date</th>
+        <th>Is blocked</th>
+    </tr>
+    <tr th:each="user:${users}">
+        <td><a th:href="@{/profile/(id=${user.id})}" th:text="${user.username}"></a></td>
+        <td th:text="${user.role}"></td>
+        <td th:text="${user.regDateTime}"></td>
+        <td th:text="${user.blocked}"></td>
+    </tr>
+</table>
+<br>
+<h2>Loyalty card requests</h2>
+<br>
+<table id="loyaltyCardRequestTable">
+    <tr>
+        <th onclick="sortTable(0, 'loyaltyCardRequestTable')">Username</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="request:${requests}">
+        <td th:text="${request.username}"></td>
+        <td>
+            <button th:onclick="accept([[${request.id}]])">Accept</button>
+            <button th:onclick="decline([[${request.id}]])">Decline</button>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

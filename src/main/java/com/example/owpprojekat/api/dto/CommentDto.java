@@ -4,6 +4,7 @@ import com.example.owpprojekat.api.enums.Status;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class CommentDto {
@@ -14,13 +15,13 @@ public class CommentDto {
         private Long id;
         private String text;
         private int rating;
-        private Date date;
+        private LocalDateTime date;
         private String username;
         private Long trainingId;
         private Status status;
         private boolean isAnonymous;
 
-        public Get(Long id, String text, int rating, Date date, String username, Long trainingId, Status status, boolean isAnonymous) {
+        public Get(Long id, String text, int rating, LocalDateTime date, String username, Long trainingId, Status status, boolean isAnonymous) {
             this.id = id;
             this.text = text;
             this.rating = rating;

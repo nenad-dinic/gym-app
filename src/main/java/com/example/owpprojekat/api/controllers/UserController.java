@@ -10,12 +10,31 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import static com.example.owpprojekat.api.enums.Role.ADMIN;
 
 @RestController
 public class UserController {
     @Autowired
     UserRepo userRepo;
+
+    @GetMapping(value = "api/users",
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    List<UserDto.Get> getUsers() {
+        try {
+            List<UserDto.Get> result = new ArrayList<>();
+            List<User> users = userRepo.findAll();
+            for (User u : users) {
+                result.add(new UserDto.Get(u.getId(), u.getUsername(), u.getEmail(), u.getName(), u.getLastname(), u.getDateOfBirth(), u.getAddress(), u.getPhoneNum(), u.getRegDateTime(), u.getRole(), u.isBlocked()));
+            }
+            return result;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     @GetMapping(value = "/api/user",
     produces = MediaType.APPLICATION_JSON_VALUE)
@@ -80,6 +99,34 @@ public class UserController {
             userRepo.save(u);
             UserDto.Get result = new UserDto.Get(u.getId(), u.getUsername(), u.getEmail(), u.getName(), u.getLastname(), u.getDateOfBirth(), u.getAddress(), u.getPhoneNum(), u.getRegDateTime(), u.getRole(), u.isBlocked());
 
+            return result;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @PutMapping(value = "/api/user/block",
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    UserDto.Get blockUser(@RequestParam("id") String id) {
+        try {
+            User u = userRepo.findById(Long.parseLong(id)).get();
+            u.setBlocked(!u.isBlocked());
+            userRepo.save(u);
+            UserDto.Get result = new UserDto.Get(u.getId(), u.getUsername(), u.getEmail(), u.getName(), u.getLastname(), u.getDateOfBirth(), u.getAddress(), u.getPhoneNum(), u.getRegDateTime(), u.getRole(), u.isBlocked());
+            return result;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @PutMapping(value = "/api/user/admin",
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    UserDto.Get makeAdmin(@RequestParam("id") String id) {
+        try {
+            User u = userRepo.findById(Long.parseLong(id)).get();
+            u.setRole(ADMIN);
+            userRepo.save(u);
+            UserDto.Get result = new UserDto.Get(u.getId(), u.getUsername(), u.getEmail(), u.getName(), u.getLastname(), u.getDateOfBirth(), u.getAddress(), u.getPhoneNum(), u.getRegDateTime(), u.getRole(), u.isBlocked());
             return result;
         } catch (Exception e) {
             return null;

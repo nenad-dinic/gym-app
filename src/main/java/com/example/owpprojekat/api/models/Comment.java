@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -15,7 +16,7 @@ public class Comment {
     private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
     private String text;
     private int rating;
-    private Date date;
+    private LocalDateTime date;
     private Long userId;
     private Long trainingId;
     private Status status;

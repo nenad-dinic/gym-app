@@ -18,14 +18,14 @@ public class UserDto {
         private String email;
         private String name;
         private String lastname;
-        private Date dateOfBirth;
+        private LocalDateTime dateOfBirth;
         private String address;
         private String phoneNum;
         private LocalDateTime regDateTime;
         private Role role;
         private boolean isBlocked;
 
-        public Get(Long id, String username, String email, String name, String lastname, Date dateOfBirth, String address, String phoneNum, LocalDateTime regDateTime, Role role, boolean isBlocked) {
+        public Get(Long id, String username, String email, String name, String lastname, LocalDateTime dateOfBirth, String address, String phoneNum, LocalDateTime regDateTime, Role role, boolean isBlocked) {
             this.id = id;
             this.username = username;
             this.email = email;
@@ -52,7 +52,7 @@ public class UserDto {
         private String name;
         private String lastname;
         @DateTimeFormat(pattern = "yyyy-MM-dd")
-        private Date dateOfBirth;
+        private LocalDateTime dateOfBirth;
         private String address;
         private String phoneNum;
 
@@ -73,7 +73,7 @@ public class UserDto {
         private String name;
         private String lastname;
         @DateTimeFormat(pattern = "yyyy-MM-dd")
-        private Date dateOfBirth;
+        private LocalDateTime dateOfBirth;
         private String address;
         private String phoneNum;
         private String oldPassword;

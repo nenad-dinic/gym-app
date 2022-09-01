@@ -9,11 +9,11 @@ public class LoyaltyCardRequestDto {
     @Setter
     public static class Get {
         private Long id;
-        private Long userId;
+        private String username;
 
-        public Get(Long id, Long userId) {
+        public Get(Long id, String username) {
             this.id = id;
-            this.userId = userId;
+            this.username = username;
         }
 
         public Get() {
