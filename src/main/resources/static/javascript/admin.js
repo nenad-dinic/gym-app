@@ -1,4 +1,4 @@
-function filterUsers() {{
+function filterUsers() {
     let username = document.getElementById("username").value;
     let role = document.getElementById("role").value;
     let rows = document.getElementById("userTable").getElementsByTagName("tr");
@@ -16,4 +16,16 @@ function filterUsers() {{
         }
         rows[i].style.display = "";
     }
-}}
+}
+
+async function accept(id) {
+    let response = await fetch("/admin/request/accept?id=" + id, {
+        method: "post"
+    })
+}
+
+async function decline(id) {
+    let response = await fetch("/admin/request/decline?id=" + id, {
+        method: "post"
+    })
+}

@@ -9,13 +9,15 @@ public class LoyaltyCardDto {
     @Setter
     public static class Get {
         private Long id;
-        private int points;
         private Long userId;
+        private int points;
 
-        public Get(Long id, int points, Long userId) {
+
+        public Get(Long id, Long userId, int points) {
             this.id = id;
-            this.points = points;
             this.userId = userId;
+            this.points = points;
+
         }
 
         public Get() {
