@@ -2,7 +2,10 @@ package com.example.owpprojekat.front.controllers;
 
 import com.example.owpprojekat.api.dto.TrainingDto;
 import com.example.owpprojekat.api.dto.TrainingTypeDto;
+import com.example.owpprojekat.api.models.TrainingToType;
 import com.example.owpprojekat.api.models.TrainingType;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -42,7 +45,11 @@ public class ModifyTrainingPageController {
             training = null;
             id = null;
         }
-        types = client.getForObject("http://localhost:8080/api/training/types", types.getClass());
+
+        ObjectMapper mapper = new ObjectMapper();
+        types = mapper.convertValue(client.getForObject("http://localhost:8080/api/training/types", types.getClass()), new TypeReference<List<TrainingTypeDto.Get>>() {
+        });
+
 
         TrainingDto.Add data = new TrainingDto.Add();
         if (training != null) {
@@ -56,11 +63,12 @@ public class ModifyTrainingPageController {
             data.setDuration(training.getDuration());
 
             List<Long> trainingTypes = new ArrayList<>();
-            /*for (int i = 0; i < types.size(); i++) {
+            for (int i = 0; i < types.size(); i++) {
                 if (training.getTypes().contains(types.get(i).getName())) {
+                    System.out.println(types.get(i));
                     trainingTypes.add(types.get(i).getId());
-                }
-            }*/
+               }
+            }
             data.setTypes(trainingTypes);
 
         } else {
