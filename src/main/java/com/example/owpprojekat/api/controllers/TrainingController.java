@@ -77,6 +77,11 @@ public class TrainingController {
     produces = MediaType.APPLICATION_JSON_VALUE,
     consumes = MediaType.APPLICATION_JSON_VALUE)
     TrainingDto.Get postTraining(@RequestBody TrainingDto.Add data) {
+
+        if (data.getTypes().size() == 0) {
+            return null;
+        }
+
         try {
             Training t = trainingRepo.save(new Training(data.getName(), data.getTrainers(), data.getDescription(), data.getPic(), data.getPrice(), data.isGroup(), data.getDifficulty(), data.getDuration()));
             for (Long id : data.getTypes()) {
@@ -99,7 +104,11 @@ public class TrainingController {
     consumes = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     TrainingDto.Get updateTraining(@RequestBody TrainingDto.Update data, @RequestParam ("id") String id) {
-        //TODO dodati dodelu tipa
+
+        if (data.getTypes().size() == 0) {
+            return null;
+        }
+
         try {
             Training t = trainingRepo.findById(Long.parseLong(id)).get();
             t.setName(data.getName());
