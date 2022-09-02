@@ -31,6 +31,13 @@
     </select>
     <label for="duration">Duration:</label>
     <input type="number" min="10" max="180" step="5" id="duration" value="30" th:field="*{duration}">
+    <label for="types">Types:</label>
+    <div id="types" style="overflow: scroll; max-height: 200px;">
+        <div th:each="type:${types}">
+            <input th:value="${type.id}" th:field="*{types}" type="checkbox" th:id="'type:' + ${type.id}" th:checked="${data != null && data.types.contains(type.name)}" name="type">
+            <label th:for="'type:' + ${type.id}" th:text="${type.name}"></label>
+        </div>
+    </div>
     <button type="submit">Submit</button>
 </form>
 </body>

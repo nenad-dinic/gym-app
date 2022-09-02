@@ -1,6 +1,8 @@
 package com.example.owpprojekat.front.controllers;
 
 import com.example.owpprojekat.api.dto.TrainingDto;
+import com.example.owpprojekat.api.dto.TrainingTypeDto;
+import com.example.owpprojekat.api.models.TrainingType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ModifyTrainingPageController {
@@ -27,6 +31,7 @@ public class ModifyTrainingPageController {
     @GetMapping("/training/modify")
     public String addTraining(Model model) {
         TrainingDto.Get training;
+        List<TrainingTypeDto.Get> types = new ArrayList<>();
         try {
             id = Long.valueOf(request.getParameter("id"));
             training = client.getForObject("http://localhost:8080/api/training?id=" + id, TrainingDto.Get.class);
@@ -37,6 +42,7 @@ public class ModifyTrainingPageController {
             training = null;
             id = null;
         }
+        types = client.getForObject("http://localhost:8080/api/training/types", types.getClass());
 
         TrainingDto.Add data = new TrainingDto.Add();
         if (training != null) {
@@ -48,11 +54,22 @@ public class ModifyTrainingPageController {
             data.setGroup(training.isGroup());
             data.setDifficulty(training.getDifficulty());
             data.setDuration(training.getDuration());
+
+            List<Long> trainingTypes = new ArrayList<>();
+            /*for (int i = 0; i < types.size(); i++) {
+                if (training.getTypes().contains(types.get(i).getName())) {
+                    trainingTypes.add(types.get(i).getId());
+                }
+            }*/
+            data.setTypes(trainingTypes);
+
         } else {
+            data.setTypes(new ArrayList<>());
             data.setPrice(100);
             data.setDuration(30);
         }
         model.addAttribute("data", data);
+        model.addAttribute("types", types);
         return "modifyTraining";
     }
 

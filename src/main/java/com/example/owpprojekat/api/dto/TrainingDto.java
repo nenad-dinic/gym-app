@@ -52,6 +52,7 @@ public class TrainingDto {
         private boolean isGroup;
         private Difficulty difficulty;
         private int duration;
+        private List<Long> types;
     }
 
     @Setter
@@ -65,5 +66,7 @@ public class TrainingDto {
         private boolean isGroup;
         private Difficulty difficulty;
         private int duration;
+        private List<Long> types;
+
     }
 }
