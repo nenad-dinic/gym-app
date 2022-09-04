@@ -21,14 +21,17 @@ public interface ScheduleRepo extends JpaRepository<Schedule, Long> {
             "SELECT s.*, t.duration AS duration FROM schedule s INNER JOIN training t ON t.id = s.training_id WHERE s.id IN :ids " +
             ") AS s1, ( " +
             "SELECT s.*, t.duration AS duration FROM schedule s INNER JOIN training t ON t.id = s.training_id WHERE s.id IN :ids " +
-            ") AS s2 " +
+            "UNION ALL (SELECT s.*, t.duration AS duration FROM reservation r INNER JOIN reservation_to_schedule rts ON r.id = rts.reservation_id " +
+            "INNER JOIN schedule s ON rts.schedule_id = s.id " +
+            "INNER JOIN training t ON t.id = s.training_id " +
+            "WHERE r.user_id = :id ) ) AS s2 " +
             "WHERE (s1.id != s2.id) AND ( " +
             "(s1.date >= s2.date AND s1.date < DATE_ADD(s2.date, INTERVAL s2.duration MINUTE)) OR " +
             "(DATE_ADD(s1.date, INTERVAL s1.duration MINUTE) > s2.date AND DATE_ADD(s1.date, INTERVAL s1.duration MINUTE) <= DATE_ADD(s2.date, INTERVAL s2.duration MINUTE)) OR " +
             "(s2.date >= s1.date AND s2.date < DATE_ADD(s1.date, INTERVAL s1.duration MINUTE)) OR " +
             "(DATE_ADD(s2.date, INTERVAL s2.duration MINUTE) > s1.date AND DATE_ADD(s2.date, INTERVAL s2.duration MINUTE) <= DATE_ADD(s1.date, INTERVAL s1.duration MINUTE)) " +
-            ");",  nativeQuery = true)
-    List<Schedule> getOverlappingSchedules(List<Long> ids);
+            "); ",  nativeQuery = true)
+    List<Schedule> getOverlappingSchedules(List<Long> ids, Long id);
 
     @Query(value = "SELECT s.* FROM schedule s " +
             "INNER JOIN training t ON s.training_id = t.id " +

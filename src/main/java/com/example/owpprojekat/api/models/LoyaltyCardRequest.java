@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "loyalty_card_requests")
+@Table(name = "loyalty_card_request")
 public class LoyaltyCardRequest {
     private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
     private Long userId;

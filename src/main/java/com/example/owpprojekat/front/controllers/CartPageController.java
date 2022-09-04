@@ -1,9 +1,7 @@
 package com.example.owpprojekat.front.controllers;
 
-import com.example.owpprojekat.api.dto.CartItemDto;
-import com.example.owpprojekat.api.dto.ReservationDto;
-import com.example.owpprojekat.api.dto.ScheduleDto;
-import com.example.owpprojekat.api.dto.UserDto;
+import com.example.owpprojekat.api.dto.*;
+import com.example.owpprojekat.api.repositories.SpecialDateRepo;
 import com.example.owpprojekat.front.data.Cart;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +21,7 @@ public class CartPageController {
 
     @GetMapping(value = "/cart")
     public String cart(Model model, HttpSession session) {
+        SpecialDateDto.Get specialDate = client.getForObject("http://localhost:8080/api/specialDate/today", SpecialDateDto.Get.class);
         if (session.getAttribute("cart") == null) {
             session.setAttribute("cart", new Cart());
         }
@@ -31,6 +30,7 @@ public class CartPageController {
         items = client.postForObject("http://localhost:8080/api/cart", new CartItemDto.CartItems(cart.getItems()), items.getClass());
         model.addAttribute("items", items);
         model.addAttribute("data", new ReservationDto.Add());
+        model.addAttribute("specialDate", specialDate);
         return "shoppingCart";
     }
 

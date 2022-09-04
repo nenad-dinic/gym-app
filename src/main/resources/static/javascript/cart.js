@@ -21,11 +21,16 @@ function calcFullPrice() {
 }
 
 function calcActualPrice() {
+    let specialDateDiscount = document.getElementById("specialDiscount");
     let actualPrice = document.getElementById("actualPrice");
     let points = document.getElementById("points");
     let fullPrice = parseInt(document.getElementById("fullPrice").innerText);
+    let specialDiscount = parseInt(specialDateDiscount?.innerText.replace("%", ""));
+    if (isNaN(specialDiscount)) {
+        specialDiscount = 0;
+    }
     points.value = Math.min(Math.max(points.value, 0), 5)
-    actualPrice.innerText = fullPrice * (1 - (points.value * 0.05));
+    actualPrice.innerText = fullPrice * (1 - (points.value * 0.05) - (specialDiscount / 100));
 
 }
 
