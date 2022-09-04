@@ -45,7 +45,7 @@ public class ScheduleController {
     consumes = MediaType.APPLICATION_JSON_VALUE)
     ScheduleDto.Get postSchedule(@RequestBody ScheduleDto.Add data) {
         try {
-            List<Schedule> overlappingSchedule = scheduleRepo.getOverlappingSchedules(data.getHallId(), data.getDate(), trainingRepo.findById(data.getTrainingId()).get().getDuration());
+            List<Schedule> overlappingSchedule = scheduleRepo.getOverlappingSchedulesForHall(data.getHallId(), data.getDate(), trainingRepo.findById(data.getTrainingId()).get().getDuration());
             if (!overlappingSchedule.isEmpty()) {
                 throw new IOException("New schedule overlaps existing ones");
             }

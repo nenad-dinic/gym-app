@@ -16,6 +16,20 @@ public interface ScheduleRepo extends JpaRepository<Schedule, Long> {
             "AND s.date > NOW() + INTERVAL 24 HOUR ;", nativeQuery = true)
     List<Schedule> getSchedulesForTraining(Long id);
 
+    @Query(value = "SELECT * " +
+            "FROM ( " +
+            "SELECT s.*, t.duration AS duration FROM schedule s INNER JOIN training t ON t.id = s.training_id WHERE s.id IN :ids " +
+            ") AS s1, ( " +
+            "SELECT s.*, t.duration AS duration FROM schedule s INNER JOIN training t ON t.id = s.training_id WHERE s.id IN :ids " +
+            ") AS s2 " +
+            "WHERE (s1.id != s2.id) AND ( " +
+            "(s1.date >= s2.date AND s1.date < DATE_ADD(s2.date, INTERVAL s2.duration MINUTE)) OR " +
+            "(DATE_ADD(s1.date, INTERVAL s1.duration MINUTE) > s2.date AND DATE_ADD(s1.date, INTERVAL s1.duration MINUTE) <= DATE_ADD(s2.date, INTERVAL s2.duration MINUTE)) OR " +
+            "(s2.date >= s1.date AND s2.date < DATE_ADD(s1.date, INTERVAL s1.duration MINUTE)) OR " +
+            "(DATE_ADD(s2.date, INTERVAL s2.duration MINUTE) > s1.date AND DATE_ADD(s2.date, INTERVAL s2.duration MINUTE) <= DATE_ADD(s1.date, INTERVAL s1.duration MINUTE)) " +
+            ");",  nativeQuery = true)
+    List<Schedule> getOverlappingSchedules(List<Long> ids);
+
     @Query(value = "SELECT s.* FROM schedule s " +
             "INNER JOIN training t ON s.training_id = t.id " +
             "WHERE s.hall_id = :hall_id AND (" +
@@ -24,7 +38,7 @@ public interface ScheduleRepo extends JpaRepository<Schedule, Long> {
             "(s.date >= :date_time AND s.date < DATE_ADD( :date_time , INTERVAL :duration MINUTE)) OR " +
             "(DATE_ADD(s.date, INTERVAL t.duration MINUTE) > :date_time AND DATE_ADD(s.date, INTERVAL t.duration MINUTE) <= DATE_ADD( :date_time , INTERVAL :duration MINUTE)) " +
             ");", nativeQuery = true)
-    List<Schedule> getOverlappingSchedules(Long hall_id, LocalDateTime date_time, int duration);
+    List<Schedule> getOverlappingSchedulesForHall(Long hall_id, LocalDateTime date_time, int duration);
 
     @Query(value = "SELECT (SELECT h.capacity FROM hall h " +
             "INNER JOIN schedule s ON h.id = s.hall_id LIMIT 1) - " +

@@ -12,7 +12,7 @@ public class ReservationDto {
     @Setter
     public static class Add {
         private Long userId;
-        private List<Long> schedules;
+        private List<Long> schedules; //its yours
         private int pointsUsed;
     }
 

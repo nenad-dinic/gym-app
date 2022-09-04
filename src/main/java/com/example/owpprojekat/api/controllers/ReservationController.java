@@ -4,6 +4,7 @@ import com.example.owpprojekat.api.dto.ReservationDto;
 import com.example.owpprojekat.api.models.LoyaltyCard;
 import com.example.owpprojekat.api.models.Reservation;
 import com.example.owpprojekat.api.models.ReservationToSchedule;
+import com.example.owpprojekat.api.models.Schedule;
 import com.example.owpprojekat.api.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 public class ReservationController {
@@ -35,7 +37,11 @@ public class ReservationController {
     consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE)
     ReservationDto.Get createReservation(@RequestBody ReservationDto.Add data) {
-        //TODO proveriti da se zakazani treninzi ne odrzavaju u isto vreme/preklapaju
+        List<Schedule> overLappingSchedules = scheduleRepo.getOverlappingSchedules(data.getSchedules());
+        if (!overLappingSchedules.isEmpty()) {
+            return null;
+        }
+
         try {
             LoyaltyCard card = cardRepo.findByUserId(data.getUserId());
 
@@ -87,7 +93,6 @@ public class ReservationController {
             } catch (Exception e) {
                 //don't apply discount or add points
                 }
-
 
             r.setPrice(savePrice);
             reservationRepo.save(r);
