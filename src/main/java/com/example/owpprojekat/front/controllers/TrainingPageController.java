@@ -3,6 +3,7 @@ package com.example.owpprojekat.front.controllers;
 import com.example.owpprojekat.api.dto.CommentDto;
 import com.example.owpprojekat.api.dto.ScheduleDto;
 import com.example.owpprojekat.api.dto.TrainingDto;
+import com.example.owpprojekat.api.dto.WishlistDto;
 import com.example.owpprojekat.front.data.Cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,10 +26,11 @@ public class TrainingPageController {
     @Autowired
     private HttpServletRequest request;
 
+    Long id;
 
     @GetMapping("/training")
     public String training(Model model) {
-        Long id;
+
         try {
             id = Long.valueOf(request.getParameter("id"));
         } catch (Exception e) {
@@ -58,6 +60,16 @@ public class TrainingPageController {
         Cart cart = (Cart) session.getAttribute("cart");
         cart.addToCart(Long.parseLong(id));
         session.setAttribute("cart", cart);
+    }
+
+    @PostMapping(value = "/wishlist/add")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String addToWishlist(@RequestParam("uId") String uId, @RequestParam("tId") String tId) {
+        WishlistDto.Get response = client.postForObject("http://localhost:8080/api/user/wishlist", new WishlistDto.Add(Long.parseLong(uId), Long.parseLong(tId)), WishlistDto.Get.class);
+        if (response != null) {
+            return "redirect:/training?id=" + id;
+        }
+        return "redirect:/training?id=" + id;
     }
 
 }

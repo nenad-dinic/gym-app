@@ -29,7 +29,7 @@
 <label for="rating" style="font-weight: bold">Rating:</label>
 <p id="rating" th:text="${data.rating}"></p>
 <div th:if="${session.user != null}" style="display: inline-block">
-    <button th:onclick="addToWishlist([[${data.id}]])">Add to wishlist</button>
+    <button th:onclick="addToWishlist([[${session.user.id}]],[[${data.id}]])">Add to wishlist</button>
 </div>
 <div th:if="${session.user != null && session.user.role.name() == 'ADMIN'}" style="display: inline-block">
     <button th:onclick="editTraining([[${data.id}]])">Edit training</button>

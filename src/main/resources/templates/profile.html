@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link th:href="@{/styles/main.css}" rel="stylesheet">
     <script defer th:src="@{/javascript/profile.js}"></script>
 </head>
 <body>
@@ -37,6 +38,19 @@
 <div th:if="${session.user != null && data.id == session.user.id}">
     <button th:onclick="'location.href=' + '\'/profile/edit?id=' + ${data.id} + '\''">Edit profile</button>
     <button th:onclick="'createLoyaltyCardRequest('+ ${data.id} + ')'">Request loyalty card</button>
+</div>
+<div th:if="${session.user != null && session.user.role.name() == 'MEMBER' && data.id == session.user.id}">
+    <h2>Wishlist:</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="item:${wishlist}">
+            <td th:text="${item.name}"></td>
+            <td><button th:onclick="removeFromWishlist([[${item.id}]])">Remove</button></td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>

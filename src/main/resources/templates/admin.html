@@ -5,7 +5,6 @@
     <title>Title</title>
     <link th:href="@{/styles/main.css}" rel="stylesheet">
     <script defer th:src="@{/javascript/utils.js}"></script>
-    <script defer th:src="@{/javascript/hall.js}"></script>
     <script defer th:src="@{/javascript/admin.js}"></script>
 
 </head>
@@ -35,7 +34,7 @@
     <tr th:each="hall:${halls}">
         <td th:text="${hall.hallTag}"></td>
         <td th:text="${hall.capacity}"></td>
-        <td><button th:onclick="update([[${hall.id}]])">Update</button></td>
+        <td><button th:onclick="updateH([[${hall.id}]])">Update</button></td>
         <td><button th:onclick="deleteH([[${hall.id}]])">Delete</button></td>
     </tr>
 </table>
@@ -77,8 +76,8 @@
     <tr th:each="request:${requests}">
         <td th:text="${request.username}"></td>
         <td>
-            <button th:onclick="accept([[${request.id}]])">Accept</button>
-            <button th:onclick="decline([[${request.id}]])">Decline</button>
+            <button th:onclick="acceptC([[${request.id}]])">Accept</button>
+            <button th:onclick="declineC([[${request.id}]])">Decline</button>
         </td>
     </tr>
 </table>

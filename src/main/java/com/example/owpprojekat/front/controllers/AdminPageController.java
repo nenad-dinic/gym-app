@@ -8,12 +8,14 @@ import com.example.owpprojekat.api.enums.Role;
 import com.example.owpprojekat.api.models.LoyaltyCard;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpSession;
@@ -54,20 +56,23 @@ public class AdminPageController {
     }
 
     @PostMapping("/admin/request/accept")
-    public String acceptRequest(@RequestParam("id") String id) {
+    @ResponseStatus(value = HttpStatus.OK)
+    public void acceptRequest(@RequestParam("id") String id) {
         ResponseEntity<LoyaltyCardDto.Get> response = client.exchange("http://localhost:8080/api/card/request/accept?id=" + id, HttpMethod.POST, new HttpEntity<>(null), LoyaltyCardDto.Get.class);
-        if (!response.hasBody()) {
-            return "redirect:/admin";
-        }
-        return "redirect:/admin";
-    }//TODO ne refresh stranicu ispitati zasto
+    }
 
     @PostMapping("/admin/request/decline")
-    public String declineRequest(@RequestParam("id") String id) {
+    @ResponseStatus(value = HttpStatus.OK)
+    public void declineRequest(@RequestParam("id") String id) {
         ResponseEntity<LoyaltyCardDto.Get> response = client.exchange("http://localhost:8080/api/card/request/decline?id=" + id, HttpMethod.DELETE, new HttpEntity<>(null), LoyaltyCardDto.Get.class);
-        if (!response.hasBody()) {
-            return "redirect:/admin";
-        }
-        return "redirect:/admin";
-    }//TODO ne refresh stranicu ispitati zasto
+    }
+
+    @PostMapping(value = "/admin/hall/delete")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void deleteHall(@RequestParam("id") String id) {
+        ResponseEntity<HallDto.Get> response = client.exchange("http://localhost:8080/api/hall?id=" + id, HttpMethod.DELETE, new HttpEntity<>(null), HallDto.Get.class);
+    }
+
+
+
 }
