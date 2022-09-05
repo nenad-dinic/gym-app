@@ -19,11 +19,13 @@ public class ReservationDto {
     @Getter
     @Setter
     public static class Get {
+        private Long id;
         private Long userId;
         private int price;
         private LocalDateTime dateTime;
 
-        public Get(Long userId, int price, LocalDateTime dateTime) {
+        public Get(Long id, Long userId, int price, LocalDateTime dateTime) {
+            this.id = id;
             this.userId = userId;
             this.price = price;
             this.dateTime = dateTime;

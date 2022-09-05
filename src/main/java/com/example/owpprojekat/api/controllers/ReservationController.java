@@ -5,11 +5,10 @@ import com.example.owpprojekat.api.models.*;
 import com.example.owpprojekat.api.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -33,13 +32,28 @@ public class ReservationController {
     @Autowired
     SpecialDateRepo specialDateRepo;
 
+    @GetMapping(value = "/api/reservation",
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    List<ReservationDto.Get> getReservationsForUser(@RequestParam("id") String id) {
+        try {
+            List<ReservationDto.Get> result = new ArrayList<>();
+            List<Reservation> reservations = reservationRepo.getByUserId(Long.parseLong(id));
+            for (Reservation r : reservations) {
+                result.add(new ReservationDto.Get(r.getId(), r.getUserId(), r.getPrice(), r.getDateTime()));
+            }
+            return result;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     @PostMapping(value = "/api/reservation",
     consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE)
     ReservationDto.Get createReservation(@RequestBody ReservationDto.Add data) {
         List<Schedule> overLappingSchedules = scheduleRepo.getOverlappingSchedules(data.getSchedules(), data.getUserId());
         if (!overLappingSchedules.isEmpty()) {
-            //TODO kad se isti rezervise ponovo dopusti, ispraiti to
+            //TODO kad se isti rezervise ponovo dopusti, ispraviti to
             return null;
         }
 
@@ -110,7 +124,7 @@ public class ReservationController {
             r.setPrice(savePrice);
             reservationRepo.save(r);
 
-            ReservationDto.Get result = new ReservationDto.Get(r.getUserId(), r.getPrice(), r.getDateTime());
+            ReservationDto.Get result = new ReservationDto.Get(r.getId(), r.getUserId(), r.getPrice(), r.getDateTime());
             return result;
         } catch (Exception e) {
             return null;

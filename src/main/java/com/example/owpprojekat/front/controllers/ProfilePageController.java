@@ -1,6 +1,7 @@
 package com.example.owpprojekat.front.controllers;
 
 import com.example.owpprojekat.api.dto.LoyaltyCardRequestDto;
+import com.example.owpprojekat.api.dto.ReservationDto;
 import com.example.owpprojekat.api.dto.UserDto;
 import com.example.owpprojekat.api.dto.WishlistDto;
 import com.example.owpprojekat.api.models.Wishlist;
@@ -47,6 +48,10 @@ public class ProfilePageController {
         List<WishlistDto.Get> wishlist = new ArrayList<>();
         wishlist = client.getForObject("http://localhost:8080/api/user/wishlist?id=" + id, wishlist.getClass());
 
+        List<ReservationDto.Get> reservations = new ArrayList<>();
+        reservations = client.getForObject("http://localhost:8080/api/reservation?id=" + id, reservations.getClass());
+
+        model.addAttribute("reservations", reservations);
         model.addAttribute("wishlist", wishlist);
         model.addAttribute("data", user);
         return "profile";
@@ -87,4 +92,5 @@ public class ProfilePageController {
     public void removeFromWishlist(@RequestParam("id") String id) {
         ResponseEntity<WishlistDto.Get> response = client.exchange("http://localhost:8080/api/user/wishlist?id=" + id, HttpMethod.DELETE, new HttpEntity<>(null), WishlistDto.Get.class);
     }
+
 }

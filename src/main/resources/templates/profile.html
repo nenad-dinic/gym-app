@@ -52,5 +52,18 @@
         </tr>
     </table>
 </div>
+<div th:if="${session.user != null && (data.id == session.user.id || session.user.role.name() == 'ADMIN')}">
+    <h2>Reservations</h2>
+    <table>
+        <tr>
+            <th>Time of reservation</th>
+            <th>Price</th>
+        </tr>
+        <tr th:each="item:${reservations}">
+            <td><a th:text="${item.dateTime}" href="#"></a></td>
+            <td th:text="${item.price}"></td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>
