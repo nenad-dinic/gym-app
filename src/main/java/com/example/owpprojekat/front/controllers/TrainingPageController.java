@@ -44,6 +44,7 @@ public class TrainingPageController {
         schedule = client.getForObject("http://localhost:8080/api/schedule/training?id=" + id, schedule.getClass());
         List<CommentDto.Get> comments = new ArrayList<>();
         comments = client.getForObject("http://localhost:8080/api/comments/training?id=" + id, comments.getClass());
+
         model.addAttribute("comments", comments);
         model.addAttribute("schedule", schedule);
         model.addAttribute("data", training);

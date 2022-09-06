@@ -50,4 +50,11 @@ public interface ScheduleRepo extends JpaRepository<Schedule, Long> {
             "WHERE s.id = :id) " +
             "FROM schedule WHERE id = :id ;", nativeQuery = true)
     int isFree(Long id);
+
+    @Query(value = "SELECT s.* FROM schedule s " +
+            "INNER JOIN reservation_to_schedule rts ON rts.schedule_id = s.id " +
+            "INNER JOIN reservation r ON r.id = rts.reservation_id " +
+            "WHERE r.id = :id ; ", nativeQuery = true)
+    List<Schedule> getSchedulesForReservation(Long id);
+
 }

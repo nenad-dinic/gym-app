@@ -60,7 +60,7 @@
             <th>Price</th>
         </tr>
         <tr th:each="item:${reservations}">
-            <td><a th:text="${item.dateTime}" href="#"></a></td>
+            <td><a th:text="${item.dateTime}" th:href="@{/reservation/(id=${item.id})}"></a></td>
             <td th:text="${item.price}"></td>
         </tr>
     </table>

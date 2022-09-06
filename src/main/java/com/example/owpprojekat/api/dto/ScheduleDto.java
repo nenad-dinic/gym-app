@@ -13,13 +13,13 @@ public class ScheduleDto {
     public static class Get {
         private Long id;
         private String hallTag;
-        private Long trainingId;
+        private String trainingName;
         private LocalDateTime date;
 
-        public Get(Long id, String hallTag, Long trainingId, LocalDateTime date) {
+        public Get(Long id, String hallTag, String trainingName, LocalDateTime date) {
             this.id = id;
             this.hallTag = hallTag;
-            this.trainingId = trainingId;
+            this.trainingName = trainingName;
             this.date = date;
         }
 

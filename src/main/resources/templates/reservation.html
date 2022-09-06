@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation</title>
+    <link th:href="@{/styles/main.css}" rel="stylesheet">
+    <script defer th:src="@{/javascript/reservation.js}"></script>
+
+
+</head>
+<body>
+<div th:insert="fragments::title"></div>
+<div th:insert="fragments::navigation"></div>
+<h2>Reserved schedules</h2>
+<table>
+    <tr>
+        <th>Training name</th>
+        <th>Hall</th>
+        <th>Date and time</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="item:${schedule}">
+        <td th:text="${item.trainingName}"></td>
+        <td th:text="${item.hallTag}"></td>
+        <td th:text="${item.date}"></td>
+        <td><button th:onclick="removeFromReservation([[${item.id}]], [[${reservation.id}]])">Cancel reservation</button></td>
+    </tr>
+</table>
+</body>
+</html>

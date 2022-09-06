@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ReservationRepo extends JpaRepository<Reservation, Long> {
 
-    List<Reservation> getByUserId(Long id);
+    List<Reservation> getByUserIdOrderByDateTimeDesc(Long id);
 
 }

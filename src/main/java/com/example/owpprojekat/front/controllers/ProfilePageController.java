@@ -49,7 +49,7 @@ public class ProfilePageController {
         wishlist = client.getForObject("http://localhost:8080/api/user/wishlist?id=" + id, wishlist.getClass());
 
         List<ReservationDto.Get> reservations = new ArrayList<>();
-        reservations = client.getForObject("http://localhost:8080/api/reservation?id=" + id, reservations.getClass());
+        reservations = client.getForObject("http://localhost:8080/api/reservation/user?id=" + id, reservations.getClass());
 
         model.addAttribute("reservations", reservations);
         model.addAttribute("wishlist", wishlist);

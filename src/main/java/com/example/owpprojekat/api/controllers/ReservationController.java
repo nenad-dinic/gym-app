@@ -1,6 +1,7 @@
 package com.example.owpprojekat.api.controllers;
 
 import com.example.owpprojekat.api.dto.ReservationDto;
+import com.example.owpprojekat.api.dto.ScheduleDto;
 import com.example.owpprojekat.api.models.*;
 import com.example.owpprojekat.api.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +33,30 @@ public class ReservationController {
     @Autowired
     SpecialDateRepo specialDateRepo;
 
-    @GetMapping(value = "/api/reservation",
+    @Autowired
+    HallRepo hallRepo;
+
+    @GetMapping(value = "/api/reservation/user",
     produces = MediaType.APPLICATION_JSON_VALUE)
     List<ReservationDto.Get> getReservationsForUser(@RequestParam("id") String id) {
         try {
             List<ReservationDto.Get> result = new ArrayList<>();
-            List<Reservation> reservations = reservationRepo.getByUserId(Long.parseLong(id));
+            List<Reservation> reservations = reservationRepo.getByUserIdOrderByDateTimeDesc(Long.parseLong(id));
             for (Reservation r : reservations) {
                 result.add(new ReservationDto.Get(r.getId(), r.getUserId(), r.getPrice(), r.getDateTime()));
             }
+            return result;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @GetMapping(value = "/api/reservation",
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    ReservationDto.Get getReservation(@RequestParam("id") String id) {
+        try {
+            Reservation r = reservationRepo.findById(Long.parseLong(id)).get();
+            ReservationDto.Get result = new ReservationDto.Get(r.getId(), r.getUserId(), r.getPrice(), r.getDateTime());
             return result;
         } catch (Exception e) {
             return null;
@@ -126,6 +142,22 @@ public class ReservationController {
 
             ReservationDto.Get result = new ReservationDto.Get(r.getId(), r.getUserId(), r.getPrice(), r.getDateTime());
             return result;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @DeleteMapping(value = "/api/reservation",
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    ScheduleDto.Get removeScheduleFromReservation(@RequestParam("scheduleId") String scheduleId, @RequestParam("reservationId") String reservationId) {
+        try { //TODO obrisati rezervaciju ukoliko nema ni jedan schedule
+            ReservationToSchedule rts = reservationToScheduleRepo.getReservationToScheduleLess24H(Long.parseLong(scheduleId), Long.parseLong(reservationId));
+            if (rts == null) {
+                return null;
+            }
+            reservationToScheduleRepo.delete(rts);
+            Schedule s = scheduleRepo.findById(rts.getScheduleId()).get();
+            return new ScheduleDto.Get(s.getId(), hallRepo.findById(s.getHallId()).get().getTag(), trainingRepo.findById(s.getTrainingId()).get().getName(), s.getDate());
         } catch (Exception e) {
             return null;
         }

@@ -32,7 +32,7 @@ public class ScheduleController {
             List<ScheduleDto.Get> result = new ArrayList<>();
             List<Schedule> schedules = scheduleRepo.getSchedulesForTraining(Long.parseLong(id));
             for (Schedule s : schedules) {
-                result.add(new ScheduleDto.Get(s.getId(), hallRepo.findById(s.getHallId()).get().getTag(), s.getTrainingId(), s.getDate()));
+                result.add(new ScheduleDto.Get(s.getId(), hallRepo.findById(s.getHallId()).get().getTag(), trainingRepo.findById(s.getTrainingId()).get().getName(), s.getDate()));
             }
             return result;
         } catch (Exception e) {
@@ -50,7 +50,7 @@ public class ScheduleController {
                 throw new IOException("New schedule overlaps existing ones");
             }
             Schedule s = scheduleRepo.save(new Schedule(data.getHallId(), data.getTrainingId(), data.getDate()));
-            ScheduleDto.Get result = new ScheduleDto.Get(s.getId(), hallRepo.findById(s.getHallId()).get().getTag(), s.getTrainingId(), s.getDate());
+            ScheduleDto.Get result = new ScheduleDto.Get(s.getId(), hallRepo.findById(s.getHallId()).get().getTag(), trainingRepo.findById(s.getTrainingId()).get().getName(), s.getDate());
             return result;
         } catch (Exception e) {
             return null;
@@ -62,7 +62,22 @@ public class ScheduleController {
     ScheduleDto.Get getSchedule(@RequestParam("id") String id) {
         try {
             Schedule s = scheduleRepo.findById(Long.parseLong(id)).get();
-            ScheduleDto.Get result = new ScheduleDto.Get(s.getId(), hallRepo.findById(s.getHallId()).get().getTag(), s.getTrainingId(), s.getDate());
+            ScheduleDto.Get result = new ScheduleDto.Get(s.getId(), hallRepo.findById(s.getHallId()).get().getTag(), trainingRepo.findById(s.getTrainingId()).get().getName(), s.getDate());
+            return result;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @GetMapping(value = "/api/schedule/reservation",
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    List<ScheduleDto.Get> getSchedulesForReservation(@RequestParam("id") String id) {
+        try {
+            List<Schedule> schedules = scheduleRepo.getSchedulesForReservation(Long.parseLong(id));
+            List<ScheduleDto.Get> result = new ArrayList<>();
+            for (Schedule s : schedules) {
+                result.add(new ScheduleDto.Get(s.getId(), hallRepo.findById(s.getHallId()).get().getTag(), trainingRepo.findById(s.getTrainingId()).get().getName(), s.getDate()));
+            }
             return result;
         } catch (Exception e) {
             return null;
