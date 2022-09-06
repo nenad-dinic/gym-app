@@ -21,4 +21,17 @@ public class Comment {
     private Long trainingId;
     private Status status;
     private boolean isAnonymous;
+
+    public Comment(String text, int rating, LocalDateTime date, Long userId, Long trainingId, Status status, boolean isAnonymous) {
+        this.text = text;
+        this.rating = rating;
+        this.date = date;
+        this.userId = userId;
+        this.trainingId = trainingId;
+        this.status = status;
+        this.isAnonymous = isAnonymous;
+    }
+
+    public Comment() {
+    }
 }

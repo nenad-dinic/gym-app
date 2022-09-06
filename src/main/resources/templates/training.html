@@ -51,7 +51,19 @@
 
 <h2>Comments:</h2>
 <div th:if="${session.user != null}" style="display: inline-block">
-    <button>Add comment</button>
+    <form action="#" th:action="@{/comment}" method="post" th:object="${commentData}">
+        <label for="text">Text</label>
+        <input id="text" th:field="*{text}">
+        <label for="comRating">Rating</label>
+        <input type="number" min="1" max="5" id="comRating" th:field="*{rating}" >
+        <label for="anonymous">Anonymous</label>
+        <select id="anonymous" th:field="*{anonymous}">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select>
+        <button  type="submit">Submit</button>
+    </form>
+    <br>
 </div>
 <table>
     <tr>

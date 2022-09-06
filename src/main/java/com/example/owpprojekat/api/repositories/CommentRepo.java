@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CommentRepo extends JpaRepository<Comment, Long> {
     @Query(value = "SELECT COALESCE (AVG(rating),0) FROM comment " +
-            "WHERE training_id = :id", nativeQuery = true)
+            "WHERE training_id = :id AND status = 1", nativeQuery = true)
     float getRatingForTraining(Long id);
 
     List<Comment> findAllByTrainingId(Long id);

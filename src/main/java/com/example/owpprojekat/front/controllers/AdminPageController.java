@@ -1,9 +1,6 @@
 package com.example.owpprojekat.front.controllers;
 
-import com.example.owpprojekat.api.dto.HallDto;
-import com.example.owpprojekat.api.dto.LoyaltyCardDto;
-import com.example.owpprojekat.api.dto.LoyaltyCardRequestDto;
-import com.example.owpprojekat.api.dto.UserDto;
+import com.example.owpprojekat.api.dto.*;
 import com.example.owpprojekat.api.enums.Role;
 import com.example.owpprojekat.api.models.LoyaltyCard;
 import org.springframework.http.HttpEntity;
@@ -51,6 +48,10 @@ public class AdminPageController {
         List<UserDto.Get> users = new ArrayList<>();
         users = client.getForObject("http://localhost:8080/api/users", users.getClass());
         model.addAttribute("users", users);
+
+        List<CommentDto.Get> comments = new ArrayList<>();
+        comments = client.getForObject("http://localhost:8080/api/comments", comments.getClass());
+        model.addAttribute("comments", comments);
 
         return "admin";
     }

@@ -1,15 +1,16 @@
 package com.example.owpprojekat.api.controllers;
 
 import com.example.owpprojekat.api.dto.CommentDto;
+import com.example.owpprojekat.api.enums.Status;
 import com.example.owpprojekat.api.models.Comment;
 import com.example.owpprojekat.api.repositories.CommentRepo;
+import com.example.owpprojekat.api.repositories.TrainingRepo;
 import com.example.owpprojekat.api.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,9 @@ public class CommentsController {
     @Autowired
     UserRepo userRepo;
 
+    @Autowired
+    TrainingRepo trainingRepo;
+
     @GetMapping(value = "/api/comments/training",
     produces = MediaType.APPLICATION_JSON_VALUE)
     List<CommentDto.Get> getCommentsForTraining(@RequestParam("id") String id) {
@@ -31,8 +35,36 @@ public class CommentsController {
             List<Comment> comments = commentRepo.findAllByTrainingId(parseLong(id));
             List<CommentDto.Get> result = new ArrayList<>();
             for (Comment c : comments) {
-                result.add(new CommentDto.Get(c.getId(), c.getText(), c.getRating(), c.getDate(), userRepo.findById(c.getUserId()).get().getUsername(), c.getTrainingId(), c.getStatus(), c.isAnonymous()));
+                result.add(new CommentDto.Get(c.getId(), c.getText(), c.getRating(), c.getDate(), userRepo.findById(c.getUserId()).get().getUsername(), trainingRepo.findById(c.getTrainingId()).get().getName(), c.getStatus(), c.isAnonymous()));
             }
+            return result;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @GetMapping(value = "/api/comments",
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    List<CommentDto.Get> getComments() {
+        try {
+            List<Comment> comments = commentRepo.findAll();
+            List<CommentDto.Get> result = new ArrayList<>();
+            for (Comment c : comments) {
+                result.add(new CommentDto.Get(c.getId(), c.getText(), c.getRating(), c.getDate(), userRepo.findById(c.getUserId()).get().getUsername(), trainingRepo.findById(c.getTrainingId()).get().getName(), c.getStatus(), c.isAnonymous()));
+            }
+            return result;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @PostMapping(value = "/api/comment",
+    produces = MediaType.APPLICATION_JSON_VALUE,
+    consumes = MediaType.APPLICATION_JSON_VALUE)
+    CommentDto.Get postComment(@RequestBody CommentDto.Add data) {
+        try {
+            Comment c = commentRepo.save(new Comment(data.getText(), data.getRating(), LocalDateTime.now(), data.getUserId(), data.getTrainingId(), Status.PENDING, data.isAnonymous()));
+            CommentDto.Get result = new CommentDto.Get(c.getId(), c.getText(), c.getRating(), c.getDate(), userRepo.findById(c.getUserId()).get().getUsername(), trainingRepo.findById(c.getTrainingId()).get().getName(), c.getStatus(), c.isAnonymous());
             return result;
         } catch (Exception e) {
             return null;

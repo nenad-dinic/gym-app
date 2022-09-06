@@ -81,5 +81,30 @@
         </td>
     </tr>
 </table>
+<br>
+<h2>Comments</h2>
+<br>
+<table>
+    <tr>
+        <th>Comment by</th>
+        <th>Comment on</th>
+        <th>Text</th>
+        <th>Date</th>
+        <th>Rating</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="item:${comments}" th:if="${item.status} == 'PENDING'">
+        <td th:text="${item.anonymous} ? 'Anonymous' : ${item.username}"></td>
+        <td th:text="${item.name}"></td>
+        <td th:text="${item.text}"></td>
+        <td th:text="${item.date}"></td>
+        <td th:text="${item.rating}"></td>
+        <td>
+            <button>Accept</button>
+            <button>Decline</button>
+        </td>
+    </tr>
+    </tr>
+</table>
 </body>
 </html>

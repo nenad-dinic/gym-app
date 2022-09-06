@@ -1,9 +1,6 @@
 package com.example.owpprojekat.front.controllers;
 
-import com.example.owpprojekat.api.dto.CommentDto;
-import com.example.owpprojekat.api.dto.ScheduleDto;
-import com.example.owpprojekat.api.dto.TrainingDto;
-import com.example.owpprojekat.api.dto.WishlistDto;
+import com.example.owpprojekat.api.dto.*;
 import com.example.owpprojekat.front.data.Cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,7 +42,11 @@ public class TrainingPageController {
         List<CommentDto.Get> comments = new ArrayList<>();
         comments = client.getForObject("http://localhost:8080/api/comments/training?id=" + id, comments.getClass());
 
+        CommentDto.Add commentData = new CommentDto.Add();
+        commentData.setRating(3);
+
         model.addAttribute("comments", comments);
+        model.addAttribute("commentData", commentData);
         model.addAttribute("schedule", schedule);
         model.addAttribute("data", training);
         return "training";
@@ -70,6 +71,20 @@ public class TrainingPageController {
         if (response != null) {
             return "redirect:/training?id=" + id;
         }
+        return "redirect:/training?id=" + id;
+    }
+
+    @PostMapping(value = "/comment")
+    public String postComment(@ModelAttribute CommentDto.Add commentData, Model model, HttpSession session) {
+        //TODO proveri da li ima rezervaciju
+        commentData.setTrainingId(id);
+        UserDto.Get user = (UserDto.Get) session.getAttribute("user");
+        if (user != null) {
+            commentData.setUserId(user.getId());
+        }
+
+        model.addAttribute("commentData", commentData);
+        CommentDto.Get response = client.postForObject("http://localhost:8080/api/comment", commentData, CommentDto.Get.class);
         return "redirect:/training?id=" + id;
     }
 
