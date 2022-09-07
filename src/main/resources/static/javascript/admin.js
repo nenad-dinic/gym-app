@@ -73,3 +73,20 @@ function filterHalls() {
         rows[i].style.display = "";
     }
 }
+
+function calcSum() {
+    let rows = document.getElementById("reportTable").getElementsByTagName("tr");
+    let priceSum = 0;
+    let count = 0;
+    for (let i = 1; i < rows.length - 1; i++) {
+        let priceC = rows[i].getElementsByTagName("td")[3];
+        let countC = rows[i].getElementsByTagName("td")[2];
+
+        priceSum += parseInt(priceC.innerText);
+        count += parseInt(countC.innerText);
+    }
+    rows[rows.length - 1].getElementsByTagName("td")[2].innerText = count;
+    rows[rows.length - 1].getElementsByTagName("td")[3].innerText = priceSum;
+}
+
+calcSum();

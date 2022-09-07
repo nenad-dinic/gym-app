@@ -106,5 +106,35 @@
     </tr>
     </tr>
 </table>
+<br>
+<h2>Report</h2>
+<form action="#" th:action="@{/admin/report}" method="post" th:object="${reportData}">
+    <label for="dateFrom">Date from:</label>
+    <input type="date"  id="dateFrom" th:field="*{dateFrom}">
+    <label for="dateTo">Date to:</label>
+    <input type="date"  id="dateTo" th:field="*{dateTo}">
+    <button type="submit">Search</button>
+</form>
+<br>
+<table id="reportTable">
+    <tr>
+        <th>Name</th>
+        <th>Trainers</th>
+        <th onclick="sortTable(2, 'reportTable')">Num of reservations</th>
+        <th onclick="sortTable(3, 'reportTable')">Sum of price</th>
+    </tr>
+    <tr th:each="item:${reports}">
+        <td><a href="#" th:text="${item.trainingName}"></a></td>
+        <td th:text="${item.trainers}"></td>
+        <td th:text="${item.numOfRes}"></td>
+        <td th:text="${item.priceSum}"></td>
+    </tr>
+    <tr id="exclude">
+        <td></td>
+        <td></td>
+        <td>Number of reservations</td>
+        <td>Full sum of price</td>
+    </tr>
+</table>
 </body>
 </html>

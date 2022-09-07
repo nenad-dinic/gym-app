@@ -65,7 +65,6 @@ public class ModifyTrainingPageController {
             List<Long> trainingTypes = new ArrayList<>();
             for (int i = 0; i < types.size(); i++) {
                 if (training.getTypes().contains(types.get(i).getName())) {
-                    System.out.println(types.get(i));
                     trainingTypes.add(types.get(i).getId());
                }
             }

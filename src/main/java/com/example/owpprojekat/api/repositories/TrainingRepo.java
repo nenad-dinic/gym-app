@@ -4,6 +4,7 @@ import com.example.owpprojekat.api.models.Training;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TrainingRepo extends JpaRepository<Training, Long> {
@@ -22,4 +23,9 @@ public interface TrainingRepo extends JpaRepository<Training, Long> {
             "INNER JOIN training_type tt ON ttt.type_id = tt.id " +
             "WHERE t.id = :id ;", nativeQuery = true)
     List<String> getTrainingTypes(Long id);
+
+    @Query(value = "SELECT DISTINCT t.* FROM training t " +
+            "INNER JOIN schedule s ON s.training_id = t.id " +
+            "WHERE s.date BETWEEN :from AND :to ;", nativeQuery = true)
+    List<Training> getTrainingsBetweenDates(LocalDateTime from, LocalDateTime to);
 }

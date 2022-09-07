@@ -9,13 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +29,11 @@ public class AdminPageController {
         try {
             UserDto.Get user = (UserDto.Get)session.getAttribute("user");
             if (user.getRole() != Role.ADMIN) {
+                session.setAttribute("reports", null);
                 return "redirect:/";
             }
         } catch (Exception e) {
+            session.setAttribute("reports", null);
             return "redirect:/";
         }
 
@@ -52,6 +53,14 @@ public class AdminPageController {
         List<CommentDto.Get> comments = new ArrayList<>();
         comments = client.getForObject("http://localhost:8080/api/comments", comments.getClass());
         model.addAttribute("comments", comments);
+
+        model.addAttribute("reportData", new ReportDto.Request());
+        if (session.getAttribute("reports") != null) {
+            List<ReportDto.Get> reports = (List<ReportDto.Get>) session.getAttribute("reports");
+            session.setAttribute("reports", null);
+            model.addAttribute("reports", reports);
+        }
+
 
         return "admin";
     }
@@ -86,6 +95,13 @@ public class AdminPageController {
         ResponseEntity<CommentDto.Get> response = client.exchange("http://localhost:8080/api/comment/decline?id=" + id, HttpMethod.PUT, new HttpEntity<>(null), CommentDto.Get.class);
     }
 
-
+    @PostMapping(value = "/admin/report")
+    public String generateReport(@ModelAttribute ReportDto.Request data, Model model, HttpSession session) {
+        model.addAttribute("reportData", data);
+        List<ReportDto.Get> reports = new ArrayList<>();
+        reports = client.postForObject("http://localhost:8080/api/report", new ReportDto.Request(data.getDateFrom(), data.getDateTo()), reports.getClass());
+        session.setAttribute("reports", reports);
+        return "redirect:/admin";
+    }
 
 }

@@ -120,14 +120,11 @@ public class ReservationController {
                     card.setPoints(card.getPoints() - data.getPointsUsed());
                     cardRepo.save(card);
                     savePrice *= (1 - discount);
-                    System.out.println("im here 1");
                 }
                 if (card != null && data.getPointsUsed() == 0 && date == null) {
                     int pointsGained = savePrice / 500;
                     card.setPoints(card.getPoints() + pointsGained);
                     cardRepo.save(card);
-                    System.out.println("im here 2");
-
                 }
             } catch (Exception e) {
                 //don't apply discount or add points

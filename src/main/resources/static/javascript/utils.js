@@ -11,6 +11,11 @@ function sortTable(column, tableId) {
     lastSortedColumn = column;
 
     let rows = document.getElementById(tableId).getElementsByTagName("tr");
+    console.log(rows)
+    rows = [].filter.call(rows, el => {
+        return el.id != "exclude";
+    })
+    console.log(rows)
     let x;
     let y;
 

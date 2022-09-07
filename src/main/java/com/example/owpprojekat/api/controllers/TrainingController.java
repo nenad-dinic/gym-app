@@ -1,14 +1,13 @@
 package com.example.owpprojekat.api.controllers;
 
+import com.example.owpprojekat.api.dto.ReportDto;
 import com.example.owpprojekat.api.dto.TrainingDto;
 import com.example.owpprojekat.api.dto.TrainingTypeDto;
+import com.example.owpprojekat.api.models.ReservationToSchedule;
 import com.example.owpprojekat.api.models.Training;
 import com.example.owpprojekat.api.models.TrainingToType;
 import com.example.owpprojekat.api.models.TrainingType;
-import com.example.owpprojekat.api.repositories.CommentRepo;
-import com.example.owpprojekat.api.repositories.TrainingRepo;
-import com.example.owpprojekat.api.repositories.TrainingToTypeRepo;
-import com.example.owpprojekat.api.repositories.TrainingTypeRepo;
+import com.example.owpprojekat.api.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +30,9 @@ public class TrainingController {
 
     @Autowired
     TrainingToTypeRepo trainingToTypeRepo;
+
+    @Autowired
+    ReservationToScheduleRepo rtsRepo;
 
     @GetMapping(value = "/api/training",
     produces = MediaType.APPLICATION_JSON_VALUE)
@@ -73,7 +75,7 @@ public class TrainingController {
         }
     }
 
-    @PostMapping(value = "api/training",
+    @PostMapping(value = "/api/training",
     produces = MediaType.APPLICATION_JSON_VALUE,
     consumes = MediaType.APPLICATION_JSON_VALUE)
     TrainingDto.Get postTraining(@RequestBody TrainingDto.Add data) {
@@ -99,7 +101,7 @@ public class TrainingController {
         }
     }
 
-    @PutMapping(value = "api/training",
+    @PutMapping(value = "/api/training",
     produces = MediaType.APPLICATION_JSON_VALUE,
     consumes = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
@@ -138,7 +140,7 @@ public class TrainingController {
         }
     }
 
-    @GetMapping(value = "api/training/types",
+    @GetMapping(value = "/api/training/types",
     produces = MediaType.APPLICATION_JSON_VALUE)
     List<TrainingTypeDto.Get> getTypes() {
         try {
@@ -148,6 +150,23 @@ public class TrainingController {
                 result.add(new TrainingTypeDto.Get(t.getId(), t.getName(), t.getDescription()));
             }
             return result;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @PostMapping(value = "/api/report",
+    produces = MediaType.APPLICATION_JSON_VALUE,
+    consumes = MediaType.APPLICATION_JSON_VALUE)
+    List<ReportDto.Get> getReport(@RequestBody ReportDto.Request data) {
+        try {
+            List<Training> trainings = trainingRepo.getTrainingsBetweenDates(data.getDateFrom().atStartOfDay(), data.getDateTo().atStartOfDay());
+            List<ReportDto.Get> reports = new ArrayList<>();
+            for (Training t : trainings) {
+                List<ReservationToSchedule> reservations = rtsRepo.getReservationsForTraining(t.getId());
+                reports.add(new ReportDto.Get(t.getName(), t.getTrainers(), reservations.size(), reservations.size() * t.getPrice()));
+            }
+            return reports;
         } catch (Exception e) {
             return null;
         }
