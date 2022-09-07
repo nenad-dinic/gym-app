@@ -36,10 +36,23 @@ async function declineC(id) {
 async function deleteH(id) {
     let response = await fetch("/admin/hall/delete?id=" + id, {
         method: "post"
-        //TODO ne treba delete nego post na front kontroler
     });
     window.location.reload();
 
+}
+
+async function acceptComment(id) {
+    let response = await fetch("/admin/comment/accept?id=" + id, {
+        method: "post"
+    })
+    window.location.reload();
+}
+
+async function declineComment(id) {
+    let response = await fetch("/admin/comment/decline?id=" + id, {
+        method: "post"
+    })
+    window.location.reload();
 }
 
 function updateH(id) {

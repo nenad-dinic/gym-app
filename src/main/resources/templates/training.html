@@ -53,15 +53,15 @@
 <div th:if="${session.user != null}" style="display: inline-block">
     <form action="#" th:action="@{/comment}" method="post" th:object="${commentData}">
         <label for="text">Text</label>
-        <input id="text" th:field="*{text}">
+        <input id="text" th:field="*{text}" th:required="required">
         <label for="comRating">Rating</label>
-        <input type="number" min="1" max="5" id="comRating" th:field="*{rating}" >
+        <input type="number" min="1" max="5" id="comRating" th:field="*{rating}" th:required="required">
         <label for="anonymous">Anonymous</label>
         <select id="anonymous" th:field="*{anonymous}">
             <option value="true">Yes</option>
             <option value="false">No</option>
         </select>
-        <button  type="submit">Submit</button>
+        <button type="submit">Submit</button>
     </form>
     <br>
 </div>

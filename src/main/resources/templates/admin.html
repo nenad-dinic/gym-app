@@ -100,8 +100,8 @@
         <td th:text="${item.date}"></td>
         <td th:text="${item.rating}"></td>
         <td>
-            <button>Accept</button>
-            <button>Decline</button>
+            <button th:onclick="acceptComment([[${item.id}]])">Accept</button>
+            <button th:onclick="declineComment([[${item.id}]])">Decline</button>
         </td>
     </tr>
     </tr>

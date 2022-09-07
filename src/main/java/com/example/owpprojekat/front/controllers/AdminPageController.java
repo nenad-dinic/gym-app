@@ -74,6 +74,18 @@ public class AdminPageController {
         ResponseEntity<HallDto.Get> response = client.exchange("http://localhost:8080/api/hall?id=" + id, HttpMethod.DELETE, new HttpEntity<>(null), HallDto.Get.class);
     }
 
+    @PostMapping(value = "/admin/comment/accept")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void acceptComment(@RequestParam("id") String id) {
+        ResponseEntity<CommentDto.Get> response = client.exchange("http://localhost:8080/api/comment/accept?id=" + id, HttpMethod.PUT, new HttpEntity<>(null), CommentDto.Get.class);
+    }
+
+    @PostMapping(value = "/admin/comment/decline")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void declineComment(@RequestParam("id") String id) {
+        ResponseEntity<CommentDto.Get> response = client.exchange("http://localhost:8080/api/comment/decline?id=" + id, HttpMethod.PUT, new HttpEntity<>(null), CommentDto.Get.class);
+    }
+
 
 
 }
