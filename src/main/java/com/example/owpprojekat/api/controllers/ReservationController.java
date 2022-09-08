@@ -69,7 +69,6 @@ public class ReservationController {
     ReservationDto.Get createReservation(@RequestBody ReservationDto.Add data) {
         List<Schedule> overLappingSchedules = scheduleRepo.getOverlappingSchedules(data.getSchedules(), data.getUserId());
         if (!overLappingSchedules.isEmpty()) {
-            //TODO kad se isti rezervise ponovo dopusti, ispraviti to
             return null;
         }
 
@@ -147,12 +146,16 @@ public class ReservationController {
     @DeleteMapping(value = "/api/reservation",
     produces = MediaType.APPLICATION_JSON_VALUE)
     ScheduleDto.Get removeScheduleFromReservation(@RequestParam("scheduleId") String scheduleId, @RequestParam("reservationId") String reservationId) {
-        try { //TODO obrisati rezervaciju ukoliko nema ni jedan schedule
+        try {
             ReservationToSchedule rts = reservationToScheduleRepo.getReservationToScheduleLess24H(Long.parseLong(scheduleId), Long.parseLong(reservationId));
             if (rts == null) {
                 return null;
             }
             reservationToScheduleRepo.delete(rts);
+            List<ReservationToSchedule> reservations = reservationToScheduleRepo.findByReservationId(Long.parseLong(reservationId));
+            if (reservations.isEmpty()) {
+                reservationRepo.deleteById(Long.parseLong(reservationId));
+            }
             Schedule s = scheduleRepo.findById(rts.getScheduleId()).get();
             return new ScheduleDto.Get(s.getId(), hallRepo.findById(s.getHallId()).get().getTag(), trainingRepo.findById(s.getTrainingId()).get().getName(), s.getDate());
         } catch (Exception e) {

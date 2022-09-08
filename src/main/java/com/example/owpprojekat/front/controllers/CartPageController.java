@@ -46,7 +46,7 @@ public class CartPageController {
     }
 
     @PostMapping(value = "/cart")
-    public String makeReservation(@ModelAttribute ReservationDto.Add data, Model model, HttpSession session) {
+    public String makeReservation(@ModelAttribute ReservationDto.Add data, HttpSession session) {
         Cart cart = (Cart) session.getAttribute("cart");
         UserDto.Get user = (UserDto.Get) session.getAttribute("user");
         data.setUserId(user.getId());
@@ -55,7 +55,6 @@ public class CartPageController {
         if (result != null) {
             cart.clear();
             session.setAttribute("cart", cart);
-            //TODO redirect to profile
             return "redirect:/profile?id=" + user.getId();
         }
 

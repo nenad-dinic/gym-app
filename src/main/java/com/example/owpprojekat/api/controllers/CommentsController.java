@@ -71,7 +71,7 @@ public class CommentsController {
                 return null;
             }
 
-            if(!commentRepo.findByUserId(data.getUserId()).isEmpty()) {
+            if(!commentRepo.findByUserIdAndTrainingId(data.getUserId(), data.getTrainingId()).isEmpty()) {
                 return null;
             }
 

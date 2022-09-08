@@ -20,4 +20,6 @@ public interface ReservationToScheduleRepo extends JpaRepository<ReservationToSc
             "INNER JOIN training t ON t.id = s.training_id " +
             "WHERE t.id = :id ;", nativeQuery = true)
     List<ReservationToSchedule> getReservationsForTraining(Long id);
+
+    List<ReservationToSchedule> findByReservationId(Long id);
 }

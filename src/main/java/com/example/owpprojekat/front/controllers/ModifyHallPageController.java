@@ -1,6 +1,8 @@
 package com.example.owpprojekat.front.controllers;
 
 import com.example.owpprojekat.api.dto.HallDto;
+import com.example.owpprojekat.api.dto.UserDto;
+import com.example.owpprojekat.api.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class ModifyHallPageController {
@@ -25,7 +28,16 @@ public class ModifyHallPageController {
     private Long id;
 
     @GetMapping("/hall")
-    public String hall(Model model) {
+    public String hall(Model model, HttpSession session) {
+        try {
+            UserDto.Get user = (UserDto.Get)session.getAttribute("user");
+            if (user.getRole() != Role.ADMIN) {
+                return "redirect:/";
+            }
+        } catch (Exception e) {
+            return "redirect:/";
+        }
+
         HallDto.Get hall;
         try {
             id = Long.parseLong(request.getParameter("id"));

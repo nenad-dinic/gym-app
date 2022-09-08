@@ -16,7 +16,16 @@ public class LoginPageController {
     RestTemplate client = new RestTemplate();
 
     @GetMapping("/login")
-    public String login(Model model) {
+    public String login(Model model, HttpSession session) {
+        try {
+            UserDto.Get user = (UserDto.Get)session.getAttribute("user");
+            if (user != null) {
+                return "redirect:/";
+            }
+        } catch (Exception e) {
+            return "redirect:/";
+        }
+
         model.addAttribute("data", new UserDto.Login());
         return "login";
     }

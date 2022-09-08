@@ -76,7 +76,6 @@ public class TrainingPageController {
 
     @PostMapping(value = "/comment")
     public String postComment(@ModelAttribute CommentDto.Add commentData, Model model, HttpSession session) {
-        //TODO proveri da li ima rezervaciju
         commentData.setTrainingId(id);
         UserDto.Get user = (UserDto.Get) session.getAttribute("user");
         if (user != null) {

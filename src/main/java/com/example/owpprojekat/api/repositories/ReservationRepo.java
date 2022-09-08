@@ -15,7 +15,8 @@ public interface ReservationRepo extends JpaRepository<Reservation, Long> {
             "INNER JOIN reservation_to_schedule rts ON r.id = rts.reservation_id " +
             "INNER JOIN schedule s ON s.id = rts.schedule_id " +
             "INNER JOIN training t ON t.id = s.training_id " +
-            "WHERE r.user_id = :userId AND t.id = :trainingId ;", nativeQuery = true)
+            "WHERE r.user_id = :userId AND t.id = :trainingId AND " +
+            "s.date < CURDATE() ; ", nativeQuery = true)
     List<Reservation> getByUserIdAndTrainingId(Long userId, Long trainingId);
 
 }

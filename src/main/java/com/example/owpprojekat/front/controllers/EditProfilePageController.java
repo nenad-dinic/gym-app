@@ -1,6 +1,7 @@
 package com.example.owpprojekat.front.controllers;
 
 import com.example.owpprojekat.api.dto.UserDto;
+import com.example.owpprojekat.api.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class EditProfilePageController {
@@ -25,7 +27,7 @@ public class EditProfilePageController {
     private Long id;
 
     @GetMapping("/profile/edit")
-    public String editProfile(Model model) {
+    public String editProfile(Model model, HttpSession session) {
         UserDto.Get user;
         try {
             id = Long.parseLong(request.getParameter("id"));
@@ -36,6 +38,15 @@ public class EditProfilePageController {
         } catch (Exception e) {
             user = null;
             id = null;
+        }
+
+        try {
+            UserDto.Get userTemp = (UserDto.Get)session.getAttribute("user");
+            if (userTemp.getId() != user.getId()) {
+                return "redirect:/";
+            }
+        } catch (Exception e) {
+            return "redirect:/";
         }
 
         UserDto.Update data = new UserDto.Update();

@@ -3,6 +3,7 @@ package com.example.owpprojekat.front.controllers;
 import com.example.owpprojekat.api.dto.ReservationDto;
 import com.example.owpprojekat.api.dto.ScheduleDto;
 import com.example.owpprojekat.api.dto.TrainingDto;
+import com.example.owpprojekat.api.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +33,7 @@ public class ReservationPageController {
     Long id;
 
     @GetMapping("/reservation")
-    public String reservation(Model model) {
+    public String reservation(Model model, HttpSession session) {
         try {
             id = Long.valueOf(request.getParameter("id"));
         } catch (Exception e) {
@@ -40,6 +42,15 @@ public class ReservationPageController {
 
         ReservationDto.Get reservation = client.getForObject("http://localhost:8080/api/reservation?id=" + id, ReservationDto.Get.class);
         if (reservation == null) {
+            return "redirect:/";
+        }
+
+        try {
+            UserDto.Get user = (UserDto.Get)session.getAttribute("user");
+            if (user.getId() != reservation.getUserId()) {
+                return "redirect:/";
+            }
+        } catch (Exception e) {
             return "redirect:/";
         }
 

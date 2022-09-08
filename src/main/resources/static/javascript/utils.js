@@ -2,8 +2,6 @@ let lastSortedColumn = -1;
 
 let direction = 1;
 
-//TODO exclude pravi problem gde nema exclude
-
 function sortTable(column, tableId) {
     if (lastSortedColumn == column) {
         direction = !direction;
@@ -13,11 +11,7 @@ function sortTable(column, tableId) {
     lastSortedColumn = column;
 
     let rows = document.getElementById(tableId).getElementsByTagName("tr");
-    console.log(rows)
-    rows = [].filter.call(rows, el => {
-        return el.id != "exclude";
-    })
-    console.log(rows)
+
     let x;
     let y;
 
@@ -25,6 +19,10 @@ function sortTable(column, tableId) {
         for (let j = i + 1; j < rows.length; j++) {
             x = rows[i].getElementsByTagName("td")[column].innerText.toLowerCase();
             y = rows[j].getElementsByTagName("td")[column].innerText.toLowerCase();
+
+            if (rows[i].id == "exclude" || rows[j].id == "exclude") {
+                continue;
+            }
 
             if (x < y && direction == 0) {
                 rows[i].parentNode.insertBefore(rows[j], rows[i]);

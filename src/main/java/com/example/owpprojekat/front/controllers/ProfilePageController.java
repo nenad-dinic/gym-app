@@ -4,6 +4,7 @@ import com.example.owpprojekat.api.dto.LoyaltyCardRequestDto;
 import com.example.owpprojekat.api.dto.ReservationDto;
 import com.example.owpprojekat.api.dto.UserDto;
 import com.example.owpprojekat.api.dto.WishlistDto;
+import com.example.owpprojekat.api.enums.Role;
 import com.example.owpprojekat.api.models.Wishlist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +35,7 @@ public class ProfilePageController {
     Long id;
 
     @GetMapping("/profile")
-    public String profile(Model model) {
+    public String profile(Model model, HttpSession session) {
         try {
             id = Long.parseLong(request.getParameter("id"));
         } catch (Exception e) {
@@ -42,6 +44,15 @@ public class ProfilePageController {
 
         UserDto.Get user = client.getForObject("http://localhost:8080/api/user?id=" + id, UserDto.Get.class);
         if (user == null) {
+            return "redirect:/";
+        }
+
+        try {
+            UserDto.Get userTemp = (UserDto.Get)session.getAttribute("user");
+            if (userTemp.getRole() != Role.ADMIN && userTemp.getId() != user.getId()) {
+                return "redirect:/";
+            }
+        } catch (Exception e) {
             return "redirect:/";
         }
 
@@ -74,7 +85,6 @@ public class ProfilePageController {
             return "redirect:/profile?id=" + id;
         }
         return "redirect:/profile?id=" + id;
-        //TODO ne refresh stranicu ispitati zasto
     }
 
     @PostMapping("profile/admin")
@@ -84,7 +94,6 @@ public class ProfilePageController {
             return "redirect:/profile?id=" + id;
         }
         return "redirect:/profile?id=" + id;
-        //TODO ne refresh stranicu ispitati zasto
     }
 
     @PostMapping("profile/wishlist")

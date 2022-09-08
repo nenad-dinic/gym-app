@@ -2,6 +2,8 @@ package com.example.owpprojekat.front.controllers;
 
 import com.example.owpprojekat.api.dto.TrainingDto;
 import com.example.owpprojekat.api.dto.TrainingTypeDto;
+import com.example.owpprojekat.api.dto.UserDto;
+import com.example.owpprojekat.api.enums.Role;
 import com.example.owpprojekat.api.models.TrainingToType;
 import com.example.owpprojekat.api.models.TrainingType;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +35,16 @@ public class ModifyTrainingPageController {
     private Long id;
 
     @GetMapping("/training/modify")
-    public String addTraining(Model model) {
+    public String addTraining(Model model, HttpSession session) {
+        try {
+            UserDto.Get user = (UserDto.Get)session.getAttribute("user");
+            if (user.getRole() != Role.ADMIN) {
+                return "redirect:/";
+            }
+        } catch (Exception e) {
+            return "redirect:/";
+        }
+
         TrainingDto.Get training;
         List<TrainingTypeDto.Get> types = new ArrayList<>();
         try {

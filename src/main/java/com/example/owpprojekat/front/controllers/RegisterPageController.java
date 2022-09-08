@@ -8,13 +8,24 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class RegisterPageController {
 
     RestTemplate client = new RestTemplate();
 
     @GetMapping("/register")
-    public String register(Model model) {
+    public String register(Model model, HttpSession session) {
+        try {
+            UserDto.Get user = (UserDto.Get)session.getAttribute("user");
+            if (user != null) {
+                return "redirect:/";
+            }
+        } catch (Exception e) {
+            return "redirect:/";
+        }
+
         model.addAttribute("data", new UserDto.Add());
         return "register";
     }
