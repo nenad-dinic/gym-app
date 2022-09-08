@@ -38,9 +38,7 @@
         <td><button th:onclick="deleteH([[${hall.id}]])">Delete</button></td>
     </tr>
 </table>
-<br>
 <h2>Users</h2>
-<br>
 <label for="username">Username:</label>
 <input id="username">
 <label for="role"></label>
@@ -50,6 +48,7 @@
     <option value="ADMIN">Admin</option>
 </select>
 <button onclick="filterUsers()">Search</button>
+<br>
 <br>
 <table id="userTable">
     <tr>
@@ -65,9 +64,7 @@
         <td th:text="${user.blocked}"></td>
     </tr>
 </table>
-<br>
 <h2>Loyalty card requests</h2>
-<br>
 <table id="loyaltyCardRequestTable">
     <tr>
         <th onclick="sortTable(0, 'loyaltyCardRequestTable')">Username</th>
@@ -81,9 +78,7 @@
         </td>
     </tr>
 </table>
-<br>
 <h2>Comments</h2>
-<br>
 <table>
     <tr>
         <th>Comment by</th>
@@ -106,7 +101,6 @@
     </tr>
     </tr>
 </table>
-<br>
 <h2>Report</h2>
 <form action="#" th:action="@{/admin/report}" method="post" th:object="${reportData}">
     <label for="dateFrom">Date from:</label>
@@ -136,5 +130,16 @@
         <td>Full sum of price</td>
     </tr>
 </table>
+<h2>Special date</h2>
+<form action="#" th:action="@{/admin/specialDate}" method="post" th:object="${specialDate}">
+    <label for="name">Name:</label>
+    <input id="name" th:field="*{name}">
+    <label for="date">Date:</label>
+    <input id="date" type="date" th:field="*{date}">
+    <label for="discount">Discount:</label>
+    <input type="number" min="1" max="100" id="discount" th:field="*{discount}">
+    <label for="discount">%</label>
+    <button type="submit">Add special date</button>
+</form>
 </body>
 </html>

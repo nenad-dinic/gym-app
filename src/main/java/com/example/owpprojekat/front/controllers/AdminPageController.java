@@ -3,6 +3,7 @@ package com.example.owpprojekat.front.controllers;
 import com.example.owpprojekat.api.dto.*;
 import com.example.owpprojekat.api.enums.Role;
 import com.example.owpprojekat.api.models.LoyaltyCard;
+import com.example.owpprojekat.api.repositories.SpecialDateRepo;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -61,6 +62,8 @@ public class AdminPageController {
             model.addAttribute("reports", reports);
         }
 
+        model.addAttribute("specialDate", new SpecialDateDto.Add());
+
 
         return "admin";
     }
@@ -101,6 +104,13 @@ public class AdminPageController {
         List<ReportDto.Get> reports = new ArrayList<>();
         reports = client.postForObject("http://localhost:8080/api/report", new ReportDto.Request(data.getDateFrom(), data.getDateTo()), reports.getClass());
         session.setAttribute("reports", reports);
+        return "redirect:/admin";
+    }
+
+    @PostMapping(value = "/admin/specialDate")
+    public String addSpecialDate(@ModelAttribute SpecialDateDto.Add data, Model model) {
+        model.addAttribute("specialDate", data);
+        SpecialDateDto.Get response = client.postForObject("http://localhost:8080/api/specialDate", data, SpecialDateDto.Get.class);
         return "redirect:/admin";
     }
 

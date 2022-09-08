@@ -2,6 +2,8 @@ let lastSortedColumn = -1;
 
 let direction = 1;
 
+//TODO exclude pravi problem gde nema exclude
+
 function sortTable(column, tableId) {
     if (lastSortedColumn == column) {
         direction = !direction;

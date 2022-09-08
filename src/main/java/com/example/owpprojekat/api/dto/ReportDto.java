@@ -33,7 +33,7 @@ public class ReportDto {
     public static class Request {
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
         private LocalDate dateFrom;
-        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
         private LocalDate dateTo;
 
         public Request(LocalDate dateFrom, LocalDate dateTo) {

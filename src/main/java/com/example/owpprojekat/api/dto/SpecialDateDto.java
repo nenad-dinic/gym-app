@@ -2,7 +2,9 @@ package com.example.owpprojekat.api.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class SpecialDateDto {
@@ -23,6 +25,24 @@ public class SpecialDateDto {
         }
 
         public Get() {
+        }
+    }
+
+    @Getter
+    @Setter
+    public static class Add {
+        private String name;
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+        private LocalDate date;
+        private int discount;
+
+        public Add(String name, LocalDate date, int discount) {
+            this.name = name;
+            this.date = date;
+            this.discount = discount;
+        }
+
+        public Add() {
         }
     }
 }
