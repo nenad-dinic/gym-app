@@ -8,46 +8,45 @@
     <script defer th:src="@{/javascript/utils.js}"></script>
 </head>
 <body>
-<div th:insert="fragments::title"></div>
 <div th:insert="fragments::navigation"></div>
 <br>
 
-<input type="text" placeholder="Name" id="name">
-<input type="text" placeholder="Type" id="type">
-<input type="number" placeholder="Min price" id="priceMin">
-<input type="number" placeholder="Max price" id="priceMax">
-<input type="text" placeholder="Trainer" id="trainer">
-<label for="difficulty">Difficulty:</label>
+<input type="text" th:placeholder="#{name}" id="name">
+<input type="text" th:placeholder="#{type}" id="type">
+<input type="number" th:placeholder="#{minPrice}" id="priceMin">
+<input type="number" th:placeholder="#{maxPrice}" id="priceMax">
+<input type="text" th:placeholder="#{trainer}" id="trainer">
+<label for="difficulty" th:text="#{difficulty}">Difficulty:</label>
 <select id="difficulty">
-    <option value="">Any</option>
-    <option value="BEGINNER">Beginner</option>
-    <option value="INTERMEDIATE">intermediate </option>
-    <option value="ADVANCED">Advanced</option>
+    <option value="" th:text="#{any}">Any</option>
+    <option value="BEGINNER" th:text="#{beginner}">Beginner</option>
+    <option value="INTERMEDIATE" th:text="#{intermediate}">intermediate </option>
+    <option value="ADVANCED" th:text="#{advanced}">Advanced</option>
 </select>
-<label for="group">Group:</label>
+<label for="group" th:text="#{group} + ':'">Group:</label>
 <select id="group">
-    <option value="">Any</option>
-    <option value="true">Yes</option>
-    <option value="false">No</option>
+    <option value="" th:text="#{any}">Any</option>
+    <option value="true" th:text="#{yes}">Yes</option>
+    <option value="false"th:text="#{no}">No</option>
 </select>
-<button onclick="filterTrainings()">Search</button>
+<button onclick="filterTrainings()" th:text="#{search}">Search</button>
 
 <br>
 <br>
 
 <table id="trainingTable">
     <tr>
-        <th>Image</th>
-        <th onclick="sortTable(1, 'trainingTable')">Name</th>
-        <th onclick="sortTable(2, 'trainingTable')">Type of training</th>
-        <th onclick="sortTable(3, 'trainingTable')">Price</th>
-        <th onclick="sortTable(4, 'trainingTable')">Trainers</th>
-        <th onclick="sortTable(5, 'trainingTable')">Group</th>
-        <th onclick="sortTable(6, 'trainingTable')">Difficulty</th>
-        <th onclick="sortTable(7, 'trainingTable')">Rating</th>
+        <th th:text="#{image}">Image</th>
+        <th onclick="sortTable(1, 'trainingTable')" th:text="#{name}">Name</th>
+        <th onclick="sortTable(2, 'trainingTable')" th:text="#{typeOfTraining}">Type of training</th>
+        <th onclick="sortTable(3, 'trainingTable')" th:text="#{price}">Price</th>
+        <th onclick="sortTable(4, 'trainingTable')" th:text="#{trainers}">Trainers</th>
+        <th onclick="sortTable(5, 'trainingTable')" th:text="#{group}">Group</th>
+        <th onclick="sortTable(6, 'trainingTable')" th:text="#{difficulty}">Difficulty</th>
+        <th onclick="sortTable(7, 'trainingTable')" th:text="#{rating}">Rating</th>
     </tr>
     <tr th:each="training:${trainings}">
-        <td><img th:src="${training.pic}"></td>
+        <td><img th:src="${training.pic}" alt="training image"></td>
         <td><a th:href="@{/training/(id=${training.id})}" th:text="${training.name}"></a></td>
         <td th:text="${training.types}"></td>
         <td th:text="${training.price}"></td>

@@ -9,28 +9,28 @@
 <body>
 <div th:insert="fragments::navigation"></div>
 <form action="#" th:action="@{/profile/edit}" method="post" th:object="${data}">
-    <label for="username">Username:</label>
+    <label for="username" th:text="#{username} + ':'">Username:</label>
     <input type="text" id="username" th:field="*{username}">
     <label for="email">Email:</label>
     <input type="email" id="email" th:field="*{email}">
-    <label for="name">Name:</label>
+    <label for="name" th:text="#{name} + ':'">Name:</label>
     <input type="text" id="name" th:field="*{name}">
-    <label for="lastname">Lastname:</label>
+    <label for="lastname" th:text="#{lastname} + ':'">Lastname:</label>
     <input type="text" id="lastname" th:field="*{lastname}">
-    <label for="dateOfBirth">Date of birth:</label>
+    <label for="dateOfBirth" th:text="#{dateOfBirth} + ':'">Date of birth:</label>
     <input type="date" id="dateOfBirth" th:field="*{dateOfBirth}">
-    <label for="address">Address:</label>
+    <label for="address" th:text="#{address} + ':'">Address:</label>
     <input type="text" id="address" th:field="*{address}">
-    <label for="phoneNum">Phone number:</label>
+    <label for="phoneNum" th:text="#{phoneNum} + ':'">Phone number:</label>
     <input type="text" id="phoneNum" th:field="*{phoneNum}">
-    <label for="oldPassword">Old password</label>
+    <label for="oldPassword" th:text="#{oldPass} + ':'">Old password</label>
     <input type="password" id="oldPassword" th:field="*{oldPassword}">
-    <label for="password">New password:</label>
+    <label for="password" th:text="#{newPass} + ':'">New password:</label>
     <input onchange="checkPasswords()" onkeydown="checkPasswords()" onpaste="checkPasswords()" oninput="checkPasswords()" type="password" id="password" th:field="*{password}">
-    <label for="repeatPassword">Repeat password:</label>
+    <label for="repeatPassword" th:text="#{repeatPass} + ':'">Repeat password:</label>
     <input onchange="checkPasswords()" onkeydown="checkPasswords()" onpaste="checkPasswords()" oninput="checkPasswords()" type="password" id="repeatPassword">
-    <p id="errorMsg">Passwords must match!</p>
-    <button id="submit" type="submit">Submit</button>
+    <p id="errorMsg" th:text="#{passMatch}">Passwords must match!</p>
+    <button id="submit" type="submit" th:text="#{submitEdit}">Submit</button>
 </form>
 
 </body>

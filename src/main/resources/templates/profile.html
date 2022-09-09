@@ -7,57 +7,56 @@
     <script defer th:src="@{/javascript/profile.js}"></script>
 </head>
 <body>
-<div th:insert="fragments::title"></div>
 <div th:insert="fragments::navigation"></div>
 <br>
 
-<label for="username" style="font-weight: bold">Username:</label>
+<label for="username" style="font-weight: bold" th:text="#{username} + ':'">Username:</label>
 <p id="username" th:text="${data.username}"></p>
-<label for="email" style="font-weight: bold">Username:</label>
+<label for="email" style="font-weight: bold">Email:</label>
 <p id="email" th:text="${data.email}"></p>
-<label for="name" style="font-weight: bold">Name:</label>
+<label for="name" style="font-weight: bold" th:text="#{name} + ':'">Name:</label>
 <p id="Name" th:text="${data.name}"></p>
-<label for="lastname" style="font-weight: bold">Lastname:</label>
+<label for="lastname" style="font-weight: bold" th:text="#{lastname} + ':'">Lastname:</label>
 <p id="lastname" th:text="${data.lastname}"></p>
-<label for="dateOfBirth" style="font-weight: bold">Date of birth:</label>
+<label for="dateOfBirth" style="font-weight: bold" th:text="#{dateOfBirth} + ':'">Date of birth:</label>
 <p id="dateOfBirth" th:text="${#temporals.format(data.dateOfBirth, 'dd-MM-yyyy')}"></p>
-<label for="address" style="font-weight: bold">Address:</label>
+<label for="address" style="font-weight: bold" th:text="#{address} + ':'">Address:</label>
 <p id="address" th:text="${data.address}"></p>
-<label for="phoneNum" style="font-weight: bold">Phone num:</label>
+<label for="phoneNum" style="font-weight: bold" th:text="#{phoneNum} + ':'">Phone num:</label>
 <p id="phoneNum" th:text="${data.phoneNum}"></p>
-<label for="regDate" style="font-weight: bold">Registration date:</label>
+<label for="regDate" style="font-weight: bold" th:text="#{regDate} + ':'">Registration date:</label>
 <p id="regDate" th:text="${#temporals.format(data.regDateTime, 'dd-MM-yyyy')}"></p>
-<label for="role" style="font-weight: bold">Role:</label>
+<label for="role" style="font-weight: bold" th:text="#{role} + ':'">Role:</label>
 <p id="role" th:text="${data.role}"></p>
-<label for="isBlocked" style="font-weight: bold">Is blocked:</label>
+<label for="isBlocked" style="font-weight: bold" th:text="#{isBlocked} + ':'">Is blocked:</label>
 <p id="isBlocked" th:text="${data.isBlocked}"></p>
 <div th:if="${session.user != null && session.user.role.name() == 'ADMIN' && session.user.id != data.id && data.role.name() != 'ADMIN'}">
-    <button th:onclick="'makeAdmin(' + ${data.id} + ')'">Make admin</button>
+    <button th:onclick="'makeAdmin(' + ${data.id} + ')'" th:text="#{makeAdmin}">Make admin</button>
     <button th:onclick="'block(' + ${data.id} + ')'" th:text="${data.isBlocked == true ? 'Unblock' : 'Block'}">Block/unblock</button>
 </div>
 <div th:if="${session.user != null && data.id == session.user.id}">
-    <button th:onclick="'location.href=' + '\'/profile/edit?id=' + ${data.id} + '\''">Edit profile</button>
-    <button th:onclick="'createLoyaltyCardRequest('+ ${data.id} + ')'">Request loyalty card</button>
+    <button th:onclick="'location.href=' + '\'/profile/edit?id=' + ${data.id} + '\''" th:text="#{editProfile}">Edit profile</button>
+    <button th:onclick="'createLoyaltyCardRequest('+ ${data.id} + ')'" th:text="#{requestLoyaltyCard}">Request loyalty card</button>
 </div>
 <div th:if="${session.user != null && session.user.role.name() == 'MEMBER' && data.id == session.user.id}">
-    <h2>Wishlist:</h2>
+    <h2 th:text="#{wishlist} + ':'">Wishlist:</h2>
     <table>
         <tr>
-            <th>Name</th>
-            <th>Action</th>
+            <th th:text="#{name}">Name</th>
+            <th th:text="#{action}">Action</th>
         </tr>
         <tr th:each="item:${wishlist}">
             <td th:text="${item.name}"></td>
-            <td><button th:onclick="removeFromWishlist([[${item.id}]])">Remove</button></td>
+            <td><button th:onclick="removeFromWishlist([[${item.id}]])" th:text="#{remove}">Remove</button></td>
         </tr>
     </table>
 </div>
 <div th:if="${session.user != null && (data.id == session.user.id || session.user.role.name() == 'ADMIN')}">
-    <h2>Reservations</h2>
+    <h2 th:text="#{reservations}">Reservations</h2>
     <table>
         <tr>
-            <th>Time of reservation</th>
-            <th>Price</th>
+            <th th:text="#{resTime}">Time of reservation</th>
+            <th th:text="#{price}">Price</th>
         </tr>
         <tr th:each="item:${reservations}">
             <td><a th:text="${item.dateTime}" th:href="@{/reservation/(id=${item.id})}"></a></td>

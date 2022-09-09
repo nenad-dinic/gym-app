@@ -16,3 +16,11 @@ async function addToCart(id) {
     })
 }
 
+const images = document.querySelectorAll('img');
+
+images.forEach(img => {
+    img.addEventListener('error', function handleError() {
+        img.src = '/images/default.jpg';
+    });
+});
+

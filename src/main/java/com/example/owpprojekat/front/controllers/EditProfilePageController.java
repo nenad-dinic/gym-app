@@ -55,7 +55,7 @@ public class EditProfilePageController {
             data.setEmail(user.getEmail());
             data.setName(user.getName());
             data.setLastname(user.getLastname());
-            data.setDateOfBirth(user.getDateOfBirth());
+            data.setDateOfBirth(user.getDateOfBirth().toLocalDate());
             data.setAddress(user.getAddress());
             data.setPhoneNum(user.getPhoneNum());
             data.setOldPassword("");

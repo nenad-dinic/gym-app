@@ -8,46 +8,46 @@
 <div th:insert="fragments::navigation"></div>
 <br>
 <form action="#" th:action="@{/training/modify}" method="post" th:object="${data}">
-    <label for="name" >Name:</label>
+    <label for="name" th:text="#{name} + ':'">Name:</label>
     <br>
     <input type="text" id="name" th:field="*{name}">
     <br>
-    <label for="trainers">Trainers:</label>
+    <label for="trainers" th:text="#{trainers} + ':'">Trainers:</label>
     <br>
     <input type="text" id="trainers" th:field="*{trainers}">
     <br>
-    <label for="description">Description:</label>
+    <label for="description" th:text="#{description} + ':'">Description:</label>
     <br>
     <input type="text" id="description" th:field="*{description}">
     <br>
-    <label for="pic">Picture:</label>
+    <label for="pic" th:text="#{image} + ':'">Picture:</label>
     <br>
-    <input type="text" id="pic" th:field="*{pic}">
+    <input type="text" id="pic" th:field="*{pic}" th:required="required">
     <br>
-    <label for="price">Price:</label>
+    <label for="price" th:text="#{price} + ':'">Price:</label>
     <br>
     <input type="number" id="price" min="100" max="1000" step="50" th:field="*{price}">
     <br>
-    <label for="group">Group:</label>
+    <label for="group" th:text="#{group} + ':'">Group:</label>
     <br>
     <select id="group" th:field="*{group}">
-        <option value="true">Yes</option>
-        <option value="false">No</option>
+        <option value="true" th:text="#{yes}">Yes</option>
+        <option value="false" th:text="#{no}">No</option>
     </select>
     <br>
-    <label for="difficulty">Difficulty;:</label>
+    <label for="difficulty" th:text="#{difficulty} + ':'">Difficulty;:</label>
     <br>
     <select id="difficulty" th:field="*{difficulty}">
-        <option value="BEGINNER">Beginner</option>
-        <option value="INTERMEDIATE">Intermediate</option>
-        <option value="ADVANCED">Advanced</option>
+        <option value="BEGINNER" th:text="#{beginner}">Beginner</option>
+        <option value="INTERMEDIATE" th:text="#{intermediate}">Intermediate</option>
+        <option value="ADVANCED" th:text="#{advanced}">Advanced</option>
     </select>
     <br>
-    <label for="duration">Duration:</label>
+    <label for="duration" th:text="#{duration} + ':'">Duration:</label>
     <br>
     <input type="number" min="10" max="180" step="5" id="duration" value="30" th:field="*{duration}">
     <br>
-    <label for="types">Types:</label>
+    <label for="types" th:text="#{types} + ':'">Types:</label>
     <br>
     <div id="types" style="overflow: scroll; max-height: 200px; width: fit-content;">
         <div th:each="type:${types}">
@@ -55,7 +55,7 @@
             <label th:for="'type:' + ${type.id}" th:text="${type.name}"></label>
         </div>
     </div>
-    <button type="submit">Submit</button>
+    <button type="submit" th:text="#{submitEdit}">Submit</button>
 </form>
 </body>
 </html>

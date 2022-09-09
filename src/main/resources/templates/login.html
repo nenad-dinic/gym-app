@@ -8,12 +8,14 @@
     <div th:insert="fragments::navigation"></div>
     <br>
     <form action="#" th:action="@{/login}" method="post" th:object="${data}">
-        <label for="username">Username:</label>
+        <label for="username" th:text="#{username} + ':'">Username:</label>
         <input type="text" id="username" th:field="*{username}">
-        <label for="password">Password:</label>
+        <label for="password" th:text="#{password} + ':'">Password:</label>
         <input type="password" id="password" th:field="*{password}">
-        <button type="submit">Login</button>
-        <p>Dont have account? <a href="/register">Register</a></p>
+        <button type="submit" th:text="#{login}">Login</button>
+        <br>
+        <p th:text="#{dontHaveAcc}" style="display: inline-block">Dont have account?</p>
+        <a href="/register" th:text="#{register}">Register</a>
     </form>
 </body>
 </html>

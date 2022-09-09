@@ -10,52 +10,52 @@
 </head>
 <body>
 <div th:insert="fragments::navigation"></div>
-<h2>Trainings</h2>
-<button onclick="location.href='/training/modify'">Add training</button>
+<h2 th:text="#{trainings}">Trainings</h2>
+<button onclick="location.href='/training/modify'" th:text="#{addTraining}">Add training</button>
 <br>
-<h2>Schedules</h2>
-<button onclick="location.href='/schedule'">Add schedule</button>
+<h2 th:text="#{schedules}">Schedules</h2>
+<button onclick="location.href='/schedule'" th:text="#{addSchedule}">Add schedule</button>
 <br>
-<h2>Halls</h2>
-<button onclick="location.href='/hall'">Add hall</button>
+<h2 th:text="#{halls}">Halls</h2>
+<button onclick="location.href='/hall'" th:text="#{addHall}">Add hall</button>
 <br>
 <br>
-<input type="text" placeholder="hall tag" id="hallTag">
-<button onclick="filterHalls()">Search</button>
+<input type="text" th:placeholder="#{hallTag}" id="hallTag">
+<button onclick="filterHalls()" th:text="#{search}">Search</button>
 <br>
 <br>
 <table id="hallTable">
     <tr>
-        <th onclick="sortTable(1, 'hallTable')">Hall tag</th>
-        <th onclick="sortTable(2, 'hallTable')">Capacity</th>
-        <th>Update</th>
-        <th>Delete</th>
+        <th onclick="sortTable(1, 'hallTable')" th:text="#{hallTag}">Hall tag</th>
+        <th onclick="sortTable(2, 'hallTable')" th:text="#{capacity}">Capacity</th>
+        <th th:text="#{update}">Update</th>
+        <th th:text="#{delete}">Delete</th>
     </tr>
     <tr th:each="hall:${halls}">
         <td th:text="${hall.hallTag}"></td>
         <td th:text="${hall.capacity}"></td>
-        <td><button th:onclick="updateH([[${hall.id}]])">Update</button></td>
-        <td><button th:onclick="deleteH([[${hall.id}]])">Delete</button></td>
+        <td><button th:onclick="updateH([[${hall.id}]])" th:text="#{update}">Update</button></td>
+        <td><button th:onclick="deleteH([[${hall.id}]])" th:text="#{delete}">Delete</button></td>
     </tr>
 </table>
-<h2>Users</h2>
-<label for="username">Username:</label>
+<h2 th:text="#{users}">Users</h2>
+<label for="username" th:text="#{username} + ':'">Username:</label>
 <input id="username">
-<label for="role"></label>
+<label for="role" th:text="#{role} + ':'"></label>
 <select id="role">
     <option value="">Any</option>
-    <option value="MEMBER">Member</option>
+    <option value="MEMBER" th:text="#{member}">Member</option>
     <option value="ADMIN">Admin</option>
 </select>
-<button onclick="filterUsers()">Search</button>
+<button onclick="filterUsers()" th:text="#{search}">Search</button>
 <br>
 <br>
 <table id="userTable">
     <tr>
-        <th onclick="sortTable(0, 'userTable')">Username</th>
-        <th onclick="sortTable(1, 'userTable')">Role</th>
-        <th>Registration date</th>
-        <th>Is blocked</th>
+        <th onclick="sortTable(0, 'userTable')" th:text="#{username}">Username</th>
+        <th onclick="sortTable(1, 'userTable')" th:text="#{role}">Role</th>
+        <th th:text="#{regDate}">Registration date</th>
+        <th th:text="#{isBlocked}">Is blocked</th>
     </tr>
     <tr th:each="user:${users}">
         <td><a th:href="@{/profile/(id=${user.id})}" th:text="${user.username}"></a></td>
@@ -64,29 +64,29 @@
         <td th:text="${user.blocked}"></td>
     </tr>
 </table>
-<h2>Loyalty card requests</h2>
+<h2 th:text="#{loyaltyCardRequests}">Loyalty card requests</h2>
 <table id="loyaltyCardRequestTable">
     <tr>
-        <th onclick="sortTable(0, 'loyaltyCardRequestTable')">Username</th>
-        <th>Actions</th>
+        <th onclick="sortTable(0, 'loyaltyCardRequestTable')" th:text="#{username}">Username</th>
+        <th th:text="#{action}">Actions</th>
     </tr>
     <tr th:each="request:${requests}">
         <td th:text="${request.username}"></td>
         <td>
-            <button th:onclick="acceptC([[${request.id}]])">Accept</button>
-            <button th:onclick="declineC([[${request.id}]])">Decline</button>
+            <button th:onclick="acceptC([[${request.id}]])" th:text="#{accept}">Accept</button>
+            <button th:onclick="declineC([[${request.id}]])" th:text="#{decline}">Decline</button>
         </td>
     </tr>
 </table>
-<h2>Comments</h2>
+<h2 th:text="#{comments}">Comments</h2>
 <table>
     <tr>
-        <th>Comment by</th>
-        <th>Comment on</th>
-        <th>Text</th>
-        <th>Date</th>
-        <th>Rating</th>
-        <th>Action</th>
+        <th th:text="#{commentBy}">Comment by</th>
+        <th th:text="#{commentOn}">Comment on</th>
+        <th th:text="#{text}">Text</th>
+        <th th:text="#{date}">Date</th>
+        <th th:text="#{rating}">Rating</th>
+        <th th:text="#{action}">Action</th>
     </tr>
     <tr th:each="item:${comments}" th:if="${item.status} == 'PENDING'">
         <td th:text="${item.anonymous} ? 'Anonymous' : ${item.username}"></td>
@@ -95,27 +95,27 @@
         <td th:text="${item.date}"></td>
         <td th:text="${item.rating}"></td>
         <td>
-            <button th:onclick="acceptComment([[${item.id}]])">Accept</button>
-            <button th:onclick="declineComment([[${item.id}]])">Decline</button>
+            <button th:onclick="acceptComment([[${item.id}]])" th:text="#{accept}">Accept</button>
+            <button th:onclick="declineComment([[${item.id}]])" th:text="#{decline}">Decline</button>
         </td>
     </tr>
     </tr>
 </table>
-<h2>Report</h2>
+<h2 th:text="#{report}">Report</h2>
 <form action="#" th:action="@{/admin/report}" method="post" th:object="${reportData}">
-    <label for="dateFrom">Date from:</label>
+    <label for="dateFrom" th:text="#{dateFrom} + ':'">Date from:</label>
     <input type="date"  id="dateFrom" th:field="*{dateFrom}">
-    <label for="dateTo">Date to:</label>
+    <label for="dateTo" th:text="#{dateTo} + ':'">Date to:</label>
     <input type="date"  id="dateTo" th:field="*{dateTo}">
-    <button type="submit">Search</button>
+    <button type="submit" th:text="#{search}">Search</button>
 </form>
 <br>
 <table id="reportTable">
     <tr>
-        <th>Name</th>
-        <th>Trainers</th>
-        <th onclick="sortTable(2, 'reportTable')">Num of reservations</th>
-        <th onclick="sortTable(3, 'reportTable')">Sum of price</th>
+        <th th:text="#{name}">Name</th>
+        <th th:text="#{trainers}">Trainers</th>
+        <th onclick="sortTable(2, 'reportTable')" th:text="#{numOfRes}">Num of reservations</th>
+        <th onclick="sortTable(3, 'reportTable')" th:text="#{sumOfPrice}">Sum of price</th>
     </tr>
     <tr th:each="item:${reports}">
         <td><a href="#" th:text="${item.trainingName}"></a></td>
@@ -130,16 +130,16 @@
         <td>Full sum of price</td>
     </tr>
 </table>
-<h2>Special date</h2>
+<h2 th:text="#{specialDate}">Special date</h2>
 <form action="#" th:action="@{/admin/specialDate}" method="post" th:object="${specialDate}">
-    <label for="name">Name:</label>
+    <label for="name" th:text="#{name}">Name:</label>
     <input id="name" th:field="*{name}">
-    <label for="date">Date:</label>
+    <label for="date" th:text="#{date} + ':'">Date:</label>
     <input id="date" type="date" th:field="*{date}">
-    <label for="discount">Discount:</label>
+    <label for="discount" th:text="#{discount}">Discount:</label>
     <input type="number" min="1" max="100" id="discount" th:field="*{discount}">
     <label for="discount">%</label>
-    <button type="submit">Add special date</button>
+    <button type="submit" th:text="#{addSpecialDate}">Add special date</button>
 </form>
 </body>
 </html>

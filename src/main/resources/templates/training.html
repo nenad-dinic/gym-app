@@ -9,68 +9,68 @@
 <body>
 <div th:insert="fragments::navigation"></div>
 
-<p><img th:src="@{/images/default.jpg}"></p>
-<label for="name" style="font-weight: bold">Name:</label>
+<p><img th:src="${data.pic}" alt="training image"></p>
+<label for="name" style="font-weight: bold" th:text="#{name} + ':'">Name:</label>
 <p id="name" th:text="${data.name}"></p>
-<label for="types" style="font-weight: bold">Types:</label>
+<label for="types" style="font-weight: bold" th:text="#{types} + ':'">Types:</label>
 <p id="types" th:text="${data.types}"></p>
-<label for="price" style="font-weight: bold">Price:</label>
+<label for="price" style="font-weight: bold" th:text="#{price} + ':'">Price:</label>
 <p id="price" th:text="${data.price}"></p>
-<label for="trainers" style="font-weight: bold">Trainers:</label>
+<label for="trainers" style="font-weight: bold" th:text="#{trainers} + ':'">Trainers:</label>
 <p id="trainers" th:text="${data.trainers}"></p>
-<label for="description" style="font-weight: bold">Description:</label>
+<label for="description" style="font-weight: bold" th:text="#{description} + ':'">Description:</label>
 <p id="description" th:text="${data.description}"></p>
-<label for="group" style="font-weight: bold">Group:</label>
+<label for="group" style="font-weight: bold" th:text="#{group} + ':'">Group:</label>
 <p id="group" th:text="${data.group}"></p>
-<label for="difficulty" style="font-weight: bold">Difficulty:</label>
+<label for="difficulty" style="font-weight: bold" th:text="#{difficulty} + ':'">Difficulty:</label>
 <p id="difficulty" th:text="${data.difficulty}"></p>
-<label for="duration" style="font-weight: bold">Duration:</label>
+<label for="duration" style="font-weight: bold" th:text="#{duration} + ':'">Duration:</label>
 <p id="duration" th:text="${data.duration}"></p>
-<label for="rating" style="font-weight: bold">Rating:</label>
+<label for="rating" style="font-weight: bold" th:text="#{rating} + ':'">Rating:</label>
 <p id="rating" th:text="${data.rating}"></p>
 <div th:if="${session.user != null}" style="display: inline-block">
-    <button th:onclick="addToWishlist([[${session.user.id}]],[[${data.id}]])">Add to wishlist</button>
+    <button th:onclick="addToWishlist([[${session.user.id}]],[[${data.id}]])" th:text="#{addToWishlist}">Add to wishlist</button>
 </div>
 <div th:if="${session.user != null && session.user.role.name() == 'ADMIN'}" style="display: inline-block">
-    <button th:onclick="editTraining([[${data.id}]])">Edit training</button>
+    <button th:onclick="editTraining([[${data.id}]])" th:text="#{editTraining}">Edit training</button>
 </div>
 
-<h2>Schedule:</h2>
+<h2 th:text="#{schedules} + ':'">Schedule:</h2>
 <table>
     <tr>
-        <th>Hall tag</th>
-        <th>Date</th>
-        <th>Action</th>
+        <th th:text="#{hallTag}">Hall tag</th>
+        <th th:text="#{dateTime}">Date</th>
+        <th th:text="#{action}">Action</th>
     </tr>
     <tr th:each="item:${schedule}">
         <td th:text="${item.hallTag}"></td>
         <td th:text="${item.date}"></td>
-        <td><button th:onclick="addToCart([[${item.id}]])">Add to cart</button></td>
+        <td><button th:onclick="addToCart([[${item.id}]])" th:text="#{addToCart}">Add to cart</button></td>
     </tr>
 </table>
 
-<h2>Comments:</h2>
+<h2 th:text="#{comments} + ':'">Comments:</h2>
 <div th:if="${session.user != null}" style="display: inline-block">
     <form action="#" th:action="@{/comment}" method="post" th:object="${commentData}">
-        <label for="text">Text</label>
+        <label for="text" th:text="#{text}">Text</label>
         <input id="text" th:field="*{text}" th:required="required">
-        <label for="comRating">Rating</label>
+        <label for="comRating" th:text="#{rating}">Rating</label>
         <input type="number" min="1" max="5" id="comRating" th:field="*{rating}" th:required="required">
-        <label for="anonymous">Anonymous</label>
+        <label for="anonymous" th:text="#{anonymous}">Anonymous</label>
         <select id="anonymous" th:field="*{anonymous}">
-            <option value="true">Yes</option>
-            <option value="false">No</option>
+            <option value="true" th:text="#{yes}">Yes</option>
+            <option value="false" th:text="#{no}">No</option>
         </select>
-        <button type="submit">Submit</button>
+        <button type="submit" th:text="#{submitComment}">Submit</button>
     </form>
     <br>
 </div>
 <table>
     <tr>
-        <th>Comment by</th>
-        <th>Text</th>
-        <th>Date</th>
-        <th>Rating</th>
+        <th th:text="#{commentBy}">Comment by</th>
+        <th th:text="#{text}">Text</th>
+        <th th:text="#{date}">Date</th>
+        <th th:text="#{rating}">Rating</th>
     </tr>
     <tr th:each="item:${comments}" th:if="${item.status} == 'ACCEPTED'">
         <td th:text="${item.anonymous} ? 'Anonymous' : ${item.username}"></td>

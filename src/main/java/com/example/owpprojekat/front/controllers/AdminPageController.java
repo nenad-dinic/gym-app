@@ -58,7 +58,6 @@ public class AdminPageController {
         model.addAttribute("reportData", new ReportDto.Request());
         if (session.getAttribute("reports") != null) {
             List<ReportDto.Get> reports = (List<ReportDto.Get>) session.getAttribute("reports");
-            session.setAttribute("reports", null);
             model.addAttribute("reports", reports);
         }
 

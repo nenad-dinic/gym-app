@@ -8,17 +8,17 @@
 <div th:insert="fragments::navigation"></div>
 <br>
 <form action="#" th:action="@{/schedule}" method="post" th:object="${data}">
-    <label for="training">Training:</label>
+    <label for="training" th:text="#{training} + ':'">Training:</label>
     <select id="training" th:field="*{trainingId}">
         <option th:each="training:${trainings}" th:text="${training.name}" th:value="${training.id}"></option>
     </select>
-    <label for="hall">Hall:</label>
+    <label for="hall" th:text="#{hall} + ':'">Hall:</label>
     <select id="hall" th:field="*{hallId}">
         <option th:each="hall:${halls}" th:text="${hall.hallTag}" th:value="${hall.id}"></option>
     </select>
-    <label for="datetime">Date and time:</label>
+    <label for="datetime" th:text="#{dateTime} + ':'">Date and time:</label>
     <input id="datetime" type="datetime-local" th:field="*{date}">
-    <button type="submit">Submit</button>
+    <button type="submit" th:text="#{submitEdit}">Submit</button>
 </form>
 </body>
 </html>

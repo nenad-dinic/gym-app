@@ -8,17 +8,16 @@
 
 </head>
 <body>
-    <div th:insert="fragments::title"></div>
     <div th:insert="fragments::navigation"></div>
     <br>
     <table id="cartTable">
         <tr>
-            <th>Name</th>
-            <th>Trainer</th>
-            <th>Type</th>
-            <th>Date and time</th>
-            <th>Price</th>
-            <th>Action</th>
+            <th th:text="#{name}">Name</th>
+            <th th:text="#{trainer}">Trainer</th>
+            <th th:text="#{type}">Type</th>
+            <th th:text="#{dateTime}">Date and time</th>
+            <th th:text="#{price}">Price</th>
+            <th th:text="#{action}">Action</th>
         </tr>
         <tr th:each="item:${items}">
             <td th:text="${item.name}"></td>
@@ -26,16 +25,16 @@
             <td th:text="${item.types}"></td>
             <td th:text="${item.date}"></td>
             <td th:text="${item.price}"></td>
-            <td><button th:onclick="removeFromCart([[${item.id}]])">Remove</button></td>
+            <td><button th:onclick="removeFromCart([[${item.id}]])" th:text="#{remove}">Remove</button></td>
         </tr>
     </table>
     <form action="#" th:action="@{/cart}" method="post" th:object="${data}">
-        <p>Full price:<span id="fullPrice"></span></p>
-        <label for="points">Use points:</label>
+        <p th:text="#{fullPrice} + ':'">Full price:<span id="fullPrice"></span></p>
+        <label for="points" th:text="#{usePoints} + '(1-5):'">Use points:</label>
         <input type="number" min="0", max="5" id="points" th:onchange="calcActualPrice()" th:field="*{pointsUsed}" th:disabled="${specialDate != null}">
         <p th:if="${specialDate != null}" th:text="${specialDate.name} + ' discount'"></p><span th:if="${specialDate != null}" id="specialDiscount" th:text="${specialDate.discount} + '%'"></span>
-        <p>Price with discount (if applicable):<span id="actualPrice"></span></p>
-        <button th:disabled="${session.user == null}" type="submit">Submit</button>
+        <p th:text="#{discountPrice} + ':'">Price with discount (if applicable):<span id="actualPrice"></span></p>
+        <button th:disabled="${session.user == null}" type="submit" th:text="#{submitCart}">Submit</button>
     </form>
 </body>
 </html>

@@ -38,5 +38,12 @@ function filterTrainings() {
         rows[i].style.display = "";
 
     }
-
 }
+
+const images = document.querySelectorAll('img');
+
+images.forEach(img => {
+    img.addEventListener('error', function handleError() {
+        img.src = '/images/default.jpg';
+    });
+});

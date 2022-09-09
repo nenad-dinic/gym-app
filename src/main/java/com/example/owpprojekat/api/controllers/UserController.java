@@ -125,7 +125,7 @@ public class UserController {
             u.setEmail(data.getEmail());
             u.setName(data.getName());
             u.setLastname(data.getLastname());
-            u.setDateOfBirth(data.getDateOfBirth());
+            u.setDateOfBirth(data.getDateOfBirth().atStartOfDay());
             u.setAddress(data.getAddress());
             u.setPhoneNum(data.getPhoneNum());
             if (data.getPassword().length() > 0) {

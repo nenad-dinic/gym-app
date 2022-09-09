@@ -5,23 +5,59 @@
     <title>Title</title>
 </head>
 <body>
-  <h1 th:fragment="title">Omega gym</h1>
+
   <nav th:fragment="navigation">
-    <a href="/">home</a>
+    <h1 th:text="#{omegaGym}">Omega gym</h1>
+    <a href="/" th:text="#{home}">home</a>
     <div th:if="${session.user != null}" style="display: inline-block">
-      <a href="/profile" th:href="'/profile?id=' + ${session.user != null ? session.user.id : -1}">profile</a>
+      <a href="/profile" th:href="'/profile?id=' + ${session.user != null ? session.user.id : -1}" th:text="#{profile}">profile</a>
     </div>
     <div th:if="${session.user != null && session.user.role.name() == 'ADMIN'}" style="display: inline-block">
-      <a href="/admin">admin</a>
+      <a href="/admin">Admin</a>
     </div>
-    <a href="/cart">cart</a>
+    <a href="/cart" th:text="#{cart}">cart</a>
     <div th:if="${session.user == null}" style="display: inline-block">
-      <a href="/login">login</a>
-      <a href="/register">register</a>
+      <a href="/login" th:text="#{login}">login</a>
+      <a href="/register" th:text="#{register}">register</a>
     </div>
     <div th:if="${session.user != null}" style="display: inline-block">
-      <a href="/logout">logout</a>
+      <a href="/logout" th:text="#{logout}">logout</a>
     </div>
+    <select id="languages" onchange="changeLanguage()">
+      <option value="en">English</option>
+      <option value="sr">Srpski</option>
+    </select>
+    <script>
+      function changeLanguage() {
+        let language = document.getElementById("languages").value;
+
+        if (localStorage.getItem("lang") != language) {
+          localStorage.setItem("lang", language);
+          window.location.reload();
+        }
+      }
+
+      function getLanguage() {
+        let url = window.location.href;
+        let base = url.split("?")[0];
+        let params = new URLSearchParams(url.split("?")[1]);
+        let language = document.getElementById("languages");
+        if (localStorage.getItem("lang") != null) {
+          language.value = localStorage.getItem("lang");
+        } else {
+          language.value = "en";
+        }
+        if (!params.has("lang")) {
+          params.append("lang", language.value);
+          window.location.replace(base + "?" + params.toString());
+        } else if (params.get("lang") != language.value) {
+          params.set("lang", language.value)
+          window.location.replace(base + "?" + params.toString());
+        }
+
+      }
+      getLanguage();
+    </script>
   </nav>
 </body>
 </html>

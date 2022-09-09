@@ -73,8 +73,8 @@ public class UserDto {
         private String email;
         private String name;
         private String lastname;
-        @DateTimeFormat(pattern = "yyyy-MM-dd")
-        private LocalDateTime dateOfBirth;
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+        private LocalDate dateOfBirth;
         private String address;
         private String phoneNum;
         private String oldPassword;
