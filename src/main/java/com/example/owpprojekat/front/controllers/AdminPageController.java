@@ -26,7 +26,6 @@ public class AdminPageController {
 
     @GetMapping("/admin")
     public String admin(Model model, HttpSession session) {
-        //TODO dodati ovaj try gde ne zelimo pristup
         try {
             UserDto.Get user = (UserDto.Get)session.getAttribute("user");
             if (user.getRole() != Role.ADMIN) {
@@ -44,7 +43,7 @@ public class AdminPageController {
         model.addAttribute("halls", halls);
 
         List<LoyaltyCardRequestDto.Get> requests = new ArrayList<>();
-        requests = client.getForObject("http://localhost:8080/api/card/request", requests.getClass());
+        requests = client.getForObject("http://localhost:8080/api/card/requests", requests.getClass());
         model.addAttribute("requests", requests);
 
         List<UserDto.Get> users = new ArrayList<>();

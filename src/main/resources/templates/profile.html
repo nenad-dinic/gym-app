@@ -32,13 +32,14 @@
 <p id="isBlocked" th:text="${data.isBlocked}"></p>
 <div th:if="${session.user != null && session.user.role.name() == 'ADMIN' && session.user.id != data.id && data.role.name() != 'ADMIN'}">
     <button th:onclick="'makeAdmin(' + ${data.id} + ')'" th:text="#{makeAdmin}">Make admin</button>
-    <button th:onclick="'block(' + ${data.id} + ')'" th:text="${data.isBlocked == true ? 'Unblock' : 'Block'}">Block/unblock</button>
+    <button th:onclick="'block(' + ${data.id} + ')'" th:text="#{unblock}" th:if="${data.isBlocked == true}">Unblock</button>
+    <button th:onclick="'block(' + ${data.id} + ')'" th:text="#{block}" th:if="${data.isBlocked == false}">Block</button>
 </div>
 <div th:if="${session.user != null && data.id == session.user.id}">
     <button th:onclick="'location.href=' + '\'/profile/edit?id=' + ${data.id} + '\''" th:text="#{editProfile}">Edit profile</button>
-    <button th:onclick="'createLoyaltyCardRequest('+ ${data.id} + ')'" th:text="#{requestLoyaltyCard}">Request loyalty card</button>
+    <button th:onclick="'createLoyaltyCardRequest('+ ${data.id} + ')'" th:text="#{requestLoyaltyCard}" th:if="${loyaltyCard == null}" th:disabled="${loyaltyCardRequest != null}">Request loyalty card</button>
 </div>
-<div th:if="${session.user != null && session.user.role.name() == 'MEMBER' && data.id == session.user.id}">
+<div th:if="${session.user != null && data.id == session.user.id}">
     <h2 th:text="#{wishlist} + ':'">Wishlist:</h2>
     <table>
         <tr>

@@ -26,6 +26,45 @@ public class LoyaltyCardController {
     @Autowired
     UserRepo userRepo;
 
+    @GetMapping(value = "api/card",
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    LoyaltyCardDto.Get getLoyaltyCardForUser(@RequestParam("id") String id) {
+        try {
+            LoyaltyCard lc = loyaltyCardRepo.findByUserId(Long.parseLong(id));
+            LoyaltyCardDto.Get result = new LoyaltyCardDto.Get(lc.getId(), lc.getUserId(), lc.getPoints());
+            return result;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @GetMapping(value = "api/card/request",
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    LoyaltyCardRequestDto.Get getRequestForUser(@RequestParam("id") String id) {
+        try {
+            LoyaltyCardRequest lcr = lcrRepo.findByUserId(Long.parseLong(id));
+            LoyaltyCardRequestDto.Get result = new LoyaltyCardRequestDto.Get(lcr.getId(), userRepo.findById(lcr.getUserId()).get().getUsername());
+            return result;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @GetMapping(value = "/api/card/requests",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    List<LoyaltyCardRequestDto.Get> getRequests() {
+        try {
+            List<LoyaltyCardRequestDto.Get> result = new ArrayList<>();
+            List<LoyaltyCardRequest> requests = lcrRepo.findAll();
+            for (LoyaltyCardRequest lcr : requests) {
+                result.add(new LoyaltyCardRequestDto.Get(lcr.getId(), userRepo.findById(lcr.getUserId()).get().getUsername()));
+            }
+            return result;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     @PostMapping(value = "/api/card/request",
     produces = MediaType.APPLICATION_JSON_VALUE)
     LoyaltyCardRequestDto.Get createRequest(@RequestBody LoyaltyCardRequestDto.Add data) {
@@ -35,21 +74,6 @@ public class LoyaltyCardController {
             }
             LoyaltyCardRequest lcr = lcrRepo.save(new LoyaltyCardRequest(data.getUserId()));
             LoyaltyCardRequestDto.Get result = new LoyaltyCardRequestDto.Get(lcr.getId(), userRepo.findById(lcr.getUserId()).get().getUsername());
-            return result;
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    @GetMapping(value = "/api/card/request",
-    produces = MediaType.APPLICATION_JSON_VALUE)
-    List<LoyaltyCardRequestDto.Get> getRequests() {
-        try {
-            List<LoyaltyCardRequestDto.Get> result = new ArrayList<>();
-            List<LoyaltyCardRequest> requests = lcrRepo.findAll();
-            for (LoyaltyCardRequest lcr : requests) {
-                result.add(new LoyaltyCardRequestDto.Get(lcr.getId(), userRepo.findById(lcr.getUserId()).get().getUsername()));
-            }
             return result;
         } catch (Exception e) {
             return null;

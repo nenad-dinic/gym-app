@@ -1,10 +1,8 @@
 package com.example.owpprojekat.front.controllers;
 
-import com.example.owpprojekat.api.dto.LoyaltyCardRequestDto;
-import com.example.owpprojekat.api.dto.ReservationDto;
-import com.example.owpprojekat.api.dto.UserDto;
-import com.example.owpprojekat.api.dto.WishlistDto;
+import com.example.owpprojekat.api.dto.*;
 import com.example.owpprojekat.api.enums.Role;
+import com.example.owpprojekat.api.models.LoyaltyCard;
 import com.example.owpprojekat.api.models.Wishlist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -62,6 +60,12 @@ public class ProfilePageController {
         List<ReservationDto.Get> reservations = new ArrayList<>();
         reservations = client.getForObject("http://localhost:8080/api/reservation/user?id=" + id, reservations.getClass());
 
+        LoyaltyCardDto.Get loyaltyCard = client.getForObject("http://localhost:8080/api/card?id=" + id, LoyaltyCardDto.Get.class);
+
+        LoyaltyCardRequestDto.Get loyaltyCardRequest = client.getForObject("http://localhost:8080/api/card/request?id=" + id, LoyaltyCardRequestDto.Get.class);
+
+        model.addAttribute("loyaltyCard", loyaltyCard);
+        model.addAttribute("loyaltyCardRequest", loyaltyCardRequest);
         model.addAttribute("reservations", reservations);
         model.addAttribute("wishlist", wishlist);
         model.addAttribute("data", user);
